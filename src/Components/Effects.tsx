@@ -1,7 +1,10 @@
-import React, { ForwardedRef, ForwardRefRenderFunction } from "react";
-import { DepthOfField, EffectComposer } from "@react-three/postprocessing";
+import {
+  Bloom,
+  DepthOfField,
+  EffectComposer,
+} from "@react-three/postprocessing";
+import React from "react";
 import { useThree } from "react-three-fiber";
-import { useAspect } from "@react-three/drei";
 
 const Effects = React.forwardRef<any, { bgScale: [number, number, number] }>(
   ({ bgScale }, ref) => {
@@ -17,6 +20,13 @@ const Effects = React.forwardRef<any, { bgScale: [number, number, number] }>(
           focalLength={0.1}
           width={width / 2}
           height={height / 2}
+        />
+        <Bloom
+          luminanceThreshold={0.5}
+          //AE feathering
+          luminanceSmoothing={0.5}
+          height={300}
+          opacity={0.8}
         />
       </EffectComposer>
     );
