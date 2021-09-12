@@ -1,7 +1,6 @@
-import { OrbitControls, Stars } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
-import * as THREE from "three";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
 
