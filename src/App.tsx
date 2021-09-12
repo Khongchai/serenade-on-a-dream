@@ -1,13 +1,21 @@
 import { Canvas } from "@react-three/fiber";
+import { Suspense, useRef } from "react";
+import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
 
 function App() {
+  const dof = useRef<any>();
+  const bgScale: [number, number, number] = [3000, 3000, 0.3];
+
   return (
     <Canvas
       style={{ width: "100vw", height: "100vh" }}
-      camera={{ position: [0, 0, 10] }}
+      camera={{ position: [0, 0, 500] }}
     >
-      <Scene />
+      <Suspense fallback={null}>
+        <Scene bgScale={bgScale} dof={dof} />
+      </Suspense>
+      <Effects ref={dof} bgScale={bgScale} />
     </Canvas>
   );
 }
