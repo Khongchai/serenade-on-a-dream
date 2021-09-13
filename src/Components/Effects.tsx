@@ -16,13 +16,15 @@ const Effects = React.forwardRef<any, { bgScale: [number, number, number] }>(
       <EffectComposer multisampling={0}>
         <DepthOfField
           ref={ref}
-          bokehScale={10}
+          bokehScale={7}
+          // disable bokeh
+          // bokehScale={0}
           focalLength={0.1}
-          width={width / 2}
-          height={height / 2}
+          width={width}
+          height={height}
         />
         <Bloom
-          luminanceThreshold={0.5}
+          luminanceThreshold={0.45}
           //AE feathering
           luminanceSmoothing={0.5}
           height={300}

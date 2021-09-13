@@ -19,6 +19,7 @@ function App() {
         <Scene bgScale={bgScale} dof={dof} />
       </Suspense>
       <Effects ref={dof} bgScale={bgScale} />
+      <color attach="background" args={["#2f344b"]} />
     </Canvas>
   );
 }

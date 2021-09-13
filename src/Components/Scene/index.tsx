@@ -30,7 +30,7 @@ const Scene: React.FC<SceneProps> = ({ bgScale, dof }) => {
 
   useFrame(() => {
     //blur in
-    dof.current.target = focusVector.lerp(focalPoint.current.position, 0.01);
+    dof.current.target = focusVector.lerp(focalPoint.current.position, 0.005);
   });
 
   return (

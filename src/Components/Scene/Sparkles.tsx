@@ -11,22 +11,28 @@ interface SparklesProps {
 
 const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
   const sparklesMaterialRef = useRef<any>();
+  //Moon texture is for testing, remove when done.
   const [starTexture] = useLoader(THREE.TextureLoader, [starShape]);
 
-  const count = 1000;
+  const count = 700;
   //TODO => refactor to custom hook?
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
+  const sizeVariations = new Float32Array(count);
+
   useEffect(() => {
-    const mainYellowRGB = { r: 1, g: 244 / 255, b: 113 / 255 };
+    const mainYellowRGB = { r: 1, g: 244 / 255, b: 40 / 255 };
     for (let i = 0; i < count * 3; i++) {
       const i3 = i * 3;
       /**
        * Positions; Should => 1 = top, -1 = bottom (normalized)
        */
       positions[i3] = Math.random() * 2 - 1;
-      positions[i3 + 1] = cubicDistribution();
+      positions[i3 + 1] = unevenDistribution();
       positions[i3 + 2] = Math.random() * 2 - 1;
+
+      const range = 4;
+      sizeVariations[i] = Math.random() * range;
 
       /**
        * Colors
@@ -58,6 +64,12 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
           count={count}
           itemSize={3}
         />
+        <bufferAttribute
+          attachObject={["attributes", "aScale"]}
+          array={sizeVariations}
+          count={count}
+          itemSize={1}
+        />
       </bufferGeometry>
       <shaderMaterial
         uniforms={{
@@ -68,6 +80,9 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         attach="material"
+        transparent={true}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
       />
     </points>
   );
@@ -76,8 +91,8 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
 export default Sparkles;
 
 //High is the densest area
-function cubicDistribution(): number {
-  const pow = 3;
+function unevenDistribution(): number {
+  const pow = 2.05;
   let random = Math.random() ** pow * 2 - 1;
   random *= -1;
   return random;
