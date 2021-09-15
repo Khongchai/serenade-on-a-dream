@@ -27,6 +27,6 @@ export const fragmentShader = `
     void main()
     {
         vec4 color = texture2D(starTexture, gl_PointCoord);
-        gl_FragColor = vec4(color.rgb * vColor, color.a);
+        gl_FragColor = vec4(color.rgb * vColor, color.a * 0.6);
     }
 `;
