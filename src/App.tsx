@@ -1,6 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef } from "react";
+import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
 
@@ -28,7 +29,7 @@ function App() {
         />
       </Suspense>
 
-      <color attach="background" args={["#2f344b"]} />
+      <color attach="background" args={[backgroundColor.hex]} />
     </Canvas>
   );
 }

@@ -14,9 +14,11 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   //Moon texture is for testing, remove when done.
   const [starTexture] = useLoader(THREE.TextureLoader, [starShape]);
 
-  const count = 700;
-  //TODO => refactor to custom hook?
-  const positions = new Float32Array(count * 3);
+  /**
+   * Initial
+   */
+  const count = 400;
+  const initialStarsPositions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const sizeVariations = new Float32Array(count);
 
@@ -27,9 +29,10 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
       /**
        * Positions; Should => 1 = top, -1 = bottom (normalized)
        */
-      positions[i3] = Math.random() * 2 - 1;
-      positions[i3 + 1] = unevenDistribution();
-      positions[i3 + 2] = Math.random() * 2 - 1;
+      initialStarsPositions[i3] = Math.random() * 3 - 1.5;
+      initialStarsPositions[i3 + 1] = unevenDistribution();
+      // initialStarsPositions[i3 + 2] = Math.random() * 2 - 1;
+      initialStarsPositions[i3 + 2] = Math.random() * 2 * 200;
 
       const range = 4;
       sizeVariations[i] = Math.random() * range;
@@ -54,7 +57,7 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
       <bufferGeometry attach="geometry">
         <bufferAttribute
           attachObject={["attributes", "position"]}
-          array={positions}
+          array={initialStarsPositions}
           count={count}
           itemSize={3}
         />

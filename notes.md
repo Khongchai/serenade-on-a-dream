@@ -1,5 +1,13 @@
 status: current working on interactable falling stars.
 
+Write new shader to fade border to background => control the curve of cosine to make the fade happen around the edges only
+
+add shooting stars
+
+see notes for trail of stars
+
+onObject click, focus
+
 Deploy to githubPages so Hong can test it.
 
 endless falling star or smth => https://github.com/mrdoob/three.js/blob/master/examples/webgl_points_sprites.html
@@ -14,3 +22,5 @@ https://stackoverflow.com/questions/58032631/why-powershell-does-not-run-angular
 Use the size of the screen to make the size of the stars stays the same for all screensizes
 
 https://codesandbox.io/s/bestservedbold-christmas-baubles-zxpv7?file=/src/App.js
+
+onStarHover, play a tone in the key using javascript
