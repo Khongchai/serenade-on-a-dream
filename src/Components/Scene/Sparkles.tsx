@@ -9,7 +9,7 @@ interface SparklesProps {
   scale: [number, number, number];
 }
 
-const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
+const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   const sparklesMaterialRef = useRef<any>();
   //Moon texture is for testing, remove when done.
   const [starTexture] = useLoader(THREE.TextureLoader, [starShape]);
@@ -46,11 +46,11 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
 
   useFrame((_, delta) => {
     //time
-    sparklesMaterialRef.current.uniforms.time.value = delta;
+    sparklesMaterialRef.current.uniforms.uTime.value += delta;
   });
 
   return (
-    <points scale={scale} position-z={-19}>
+    <points scale={scale} ref={ref} position-z={-19}>
       <bufferGeometry attach="geometry">
         <bufferAttribute
           attachObject={["attributes", "position"]}
@@ -73,8 +73,9 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
       </bufferGeometry>
       <shaderMaterial
         uniforms={{
-          time: { value: 0 },
+          uTime: { value: 0 },
           starTexture: { value: starTexture },
+          uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
         }}
         ref={sparklesMaterialRef}
         vertexShader={vertexShader}
@@ -86,7 +87,7 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
       />
     </points>
   );
-};
+});
 
 export default Sparkles;
 

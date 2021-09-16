@@ -6,6 +6,8 @@ import Scene from "./Components/Scene";
 
 function App() {
   const dof = useRef<any>();
+  const starsForSelectiveBloom = useRef<any>();
+  const lightRef = useRef<any>();
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
 
   return (
@@ -14,11 +16,18 @@ function App() {
       camera={{ position: [0, 0, 500] }}
       linear={true}
     >
+      <pointLight ref={lightRef} />
       <OrbitControls enablePan={true} enableZoom={true} enableRotate={true} />
       <Suspense fallback={null}>
-        <Scene bgScale={bgScale} dof={dof} />
+        <Scene ref={starsForSelectiveBloom} bgScale={bgScale} dof={dof} />
+        <Effects
+          ref={dof}
+          bgScale={bgScale}
+          lightRef={lightRef}
+          starsForSelectiveBloom={starsForSelectiveBloom}
+        />
       </Suspense>
-      <Effects ref={dof} bgScale={bgScale} />
+
       <color attach="background" args={["#2f344b"]} />
     </Canvas>
   );

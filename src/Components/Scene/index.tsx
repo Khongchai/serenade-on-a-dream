@@ -16,7 +16,7 @@ interface SceneProps {
   dof: React.MutableRefObject<any>;
 }
 
-const Scene: React.FC<SceneProps> = ({ bgScale, dof }) => {
+const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const fullScale = useAspect(2000, 2000, 0.25);
   const extraLargeScale = useAspect(...bgScale);
 
@@ -38,7 +38,7 @@ const Scene: React.FC<SceneProps> = ({ bgScale, dof }) => {
       <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
         <meshBasicMaterial attach="material" map={bg} transparent={true} />
       </Plane>
-      <Sparkles scale={extraLargeScale} />
+      <Sparkles ref={ref} scale={extraLargeScale} />
       <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
         <meshBasicMaterial attach="material" map={moon} transparent={true} />
       </Plane>
@@ -61,6 +61,6 @@ const Scene: React.FC<SceneProps> = ({ bgScale, dof }) => {
       </group>
     </>
   );
-};
+});
 
 export default Scene;
