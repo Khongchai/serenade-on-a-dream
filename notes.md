@@ -1,6 +1,10 @@
 status: current working on interactable falling stars.
 
-Write new shader to fade border to background => apply fade texture to all necessary layers => control the curve of cosine to make the fade happen around the edges only
+Make the panning delayed
+
+Maybe godrays as well?
+
+Idle camera movement (like handheld camera).
 
 add shooting stars
 

@@ -23,7 +23,7 @@ export const fragmentShader = `
     {
         vec4 textureColor = texture2D(uTexture, vUv);
 
-        float edgeLocation = -pow((2.0*vUv.x - 1.0), 8.0) + 1.0;
+        float edgeLocation = -pow((2.0 * vUv.x - 1.0), 8.0) + 1.0;
 
         vec3 newUv = mix(backgroundColor, textureColor.rgb, edgeLocation);
         gl_FragColor = vec4(newUv, textureColor.a);

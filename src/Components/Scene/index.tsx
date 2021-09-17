@@ -8,10 +8,8 @@ import bigCloud2 from "../layers/2-bigCloud.png";
 import clouds3 from "../layers/3-clouds.png";
 import moon4 from "../layers/4-moon.png";
 import bgElem5 from "../layers/5-bgElem.png";
-import Sparkles from "./Sparkles";
-import { fragmentShader, vertexShader } from "../glsl/fadeToBackgroundMaterial";
-import { backgroundColor } from "../const";
 import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
+import Sparkles from "./Sparkles";
 
 interface SceneProps {
   bgScale: [number, number, number];
@@ -30,13 +28,18 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     [focusObjects0, sparkles1, bigCloud2, clouds3, moon4, bgElem5]
   );
 
-  useFrame(() => {
+  const allRef = useRef<any>();
+
+  useFrame((state, delta) => {
     //blur in
+    allRef.current.rotation.y = state.mouse.x * 0.5;
+    allRef.current.rotation.x = -state.mouse.y * 0.5;
+
     dof.current.target = focusVector.lerp(focalPoint.current.position, 0.005);
   });
 
   return (
-    <>
+    <group ref={allRef}>
       <Sparkles ref={ref} scale={extraLargeScale} />
       <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
         <BackgroundShaderMaterial shaderTexture={bg} />
@@ -44,15 +47,13 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
       <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
         <BackgroundShaderMaterial shaderTexture={moon} />
       </Plane>
-      <group>
-        <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
-          <BackgroundShaderMaterial shaderTexture={bigCloud} />
-        </Plane>
-        <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
-          <BackgroundShaderMaterial shaderTexture={charactersCastle} />
-        </Plane>
-      </group>
-    </>
+      <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
+        <BackgroundShaderMaterial shaderTexture={bigCloud} />
+      </Plane>
+      <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
+        <BackgroundShaderMaterial shaderTexture={charactersCastle} />
+      </Plane>
+    </group>
   );
 });
 

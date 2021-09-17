@@ -1,4 +1,4 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
 import { useLoader } from "react-three-fiber";
 import { fragmentShader, vertexShader } from "../glsl/sparklesMaterial";
@@ -48,7 +48,6 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   }, []);
 
   useFrame((_, delta) => {
-    //time
     sparklesMaterialRef.current.uniforms.uTime.value += delta;
   });
 
@@ -79,6 +78,8 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
           uTime: { value: 0 },
           starTexture: { value: starTexture },
           uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+          //1920 = ideal
+          uWindowWidthRatio: { value: window.innerWidth / 1920 },
         }}
         ref={sparklesMaterialRef}
         vertexShader={vertexShader}

@@ -7,10 +7,11 @@ export const vertexShader = `
 
     uniform float uPixelRatio;
     uniform float uTime;
+    uniform float uWindowWidthRatio;
 
     void main()
     {
-        gl_PointSize = 2000.0 * aScale * uPixelRatio;
+        gl_PointSize = 2000.0 * aScale * uPixelRatio * uWindowWidthRatio;
 
         vColor = aColor;
         vPointSize = gl_PointSize;
