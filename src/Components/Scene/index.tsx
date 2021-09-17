@@ -1,6 +1,6 @@
 import { Plane, useAspect } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import focusObjects0 from "../layers/0-focusObjects.png";
 import sparkles1 from "../layers/1-sparkles.png";

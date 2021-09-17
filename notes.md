@@ -1,6 +1,6 @@
 status: current working on interactable falling stars.
 
-Make the panning delayed
+Make the panning delayed => replace mousedown function with a mouseover listener? wtf? => https://stackoverflow.com/questions/60678494/orbit-controls-follow-the-mouse-without-clicking-three-js
 
 Maybe godrays as well?
 
