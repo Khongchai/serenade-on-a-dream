@@ -11,6 +11,7 @@ import bgElem5 from "../layers/5-bgElem.png";
 import Sparkles from "./Sparkles";
 import { fragmentShader, vertexShader } from "../glsl/fadeToBackgroundMaterial";
 import { backgroundColor } from "../const";
+import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
 
 interface SceneProps {
   bgScale: [number, number, number];
@@ -38,37 +39,17 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     <>
       <Sparkles ref={ref} scale={extraLargeScale} />
       <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
-        <shaderMaterial
-          attach="material"
-          uniforms={{
-            uTexture: { value: bg },
-            pixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-            backgroundColor: {
-              value: new THREE.Color(backgroundColor.hex),
-            },
-          }}
-          transparent={true}
-          vertexShader={vertexShader}
-          fragmentShader={fragmentShader}
-        />
+        <BackgroundShaderMaterial shaderTexture={bg} />
       </Plane>
       <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
-        <meshBasicMaterial attach="material" map={moon} transparent={true} />
+        <BackgroundShaderMaterial shaderTexture={moon} />
       </Plane>
       <group>
         <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
-          <meshBasicMaterial
-            attach="material"
-            map={bigCloud}
-            transparent={true}
-          />
+          <BackgroundShaderMaterial shaderTexture={bigCloud} />
         </Plane>
         <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
-          <meshBasicMaterial
-            attach="material"
-            map={charactersCastle}
-            transparent={true}
-          />
+          <BackgroundShaderMaterial shaderTexture={charactersCastle} />
         </Plane>
       </group>
     </>

@@ -1,6 +1,6 @@
 status: current working on interactable falling stars.
 
-Write new shader to fade border to background => control the curve of cosine to make the fade happen around the edges only
+Write new shader to fade border to background => apply fade texture to all necessary layers => control the curve of cosine to make the fade happen around the edges only
 
 add shooting stars
 
