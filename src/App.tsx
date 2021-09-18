@@ -1,16 +1,17 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
-import { OrbitControls as ThreeOrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 function App() {
   const dof = useRef<any>();
   const starsForSelectiveBloom = useRef<any>();
   const lightRef = useRef<any>();
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
+
+  useEffect(() => {}, []);
 
   return (
     <Canvas

@@ -2,6 +2,7 @@ import { Plane, useAspect } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { DelayedMouse } from "../../utils/delayedMouse";
 import focusObjects0 from "../layers/0-focusObjects.png";
 import sparkles1 from "../layers/1-sparkles.png";
 import bigCloud2 from "../layers/2-bigCloud.png";
@@ -15,6 +16,8 @@ interface SceneProps {
   bgScale: [number, number, number];
   dof: React.MutableRefObject<any>;
 }
+
+const delayedMouse = new DelayedMouse();
 
 const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const fullScale = useAspect(2000, 2000, 0.25);
@@ -31,9 +34,14 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const allRef = useRef<any>();
 
   useFrame((state, delta) => {
-    //blur in
-    allRef.current.rotation.y = state.mouse.x * 0.5;
-    allRef.current.rotation.x = -state.mouse.y * 0.5;
+    const { x, y } = delayedMouse.updateMouse(
+      state.mouse.x * 0.5,
+      state.mouse.y * 0.5,
+      delta
+    );
+
+    allRef.current.rotation.y = x;
+    allRef.current.rotation.x = -y;
 
     dof.current.target = focusVector.lerp(focalPoint.current.position, 0.005);
   });
