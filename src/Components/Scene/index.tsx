@@ -3,6 +3,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { DelayedMouse } from "../../utils/delayedMouse";
+import usePointerPos from "../../utils/usePointerPos";
 import focusObjects0 from "../layers/0-focusObjects.png";
 import sparkles1 from "../layers/1-sparkles.png";
 import bigCloud2 from "../layers/2-bigCloud.png";
@@ -17,7 +18,7 @@ interface SceneProps {
   dof: React.MutableRefObject<any>;
 }
 
-const delayedMouse = new DelayedMouse();
+const delayedMouse = new DelayedMouse(0.03);
 
 const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const fullScale = useAspect(2000, 2000, 0.25);
@@ -33,11 +34,12 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
 
   const allRef = useRef<any>();
 
-  useFrame((state, delta) => {
+  const { pointerPos } = usePointerPos();
+
+  useFrame(() => {
     const { x, y } = delayedMouse.updateMouse(
-      state.mouse.x * 0.5,
-      state.mouse.y * 0.5,
-      delta
+      pointerPos.x * 0.5,
+      pointerPos.y * 0.5
     );
 
     allRef.current.rotation.y = x;
