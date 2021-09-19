@@ -4,6 +4,8 @@ Maybe godrays as well?
 
 Camera movement auto panning.
 
+Troubleshoot stars stop moving when group rotates + when resizing
+
 add shooting stars
 
 see notes for trail of stars

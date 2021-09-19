@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Suspense, useEffect, useRef } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Suspense, useRef } from "react";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
@@ -11,8 +11,6 @@ function App() {
   const lightRef = useRef<any>();
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
 
-  useEffect(() => {}, []);
-
   return (
     <Canvas
       style={{ width: "100vw", height: "100vh" }}
@@ -20,16 +18,18 @@ function App() {
       linear={true}
     >
       <pointLight ref={lightRef} />
-      {/* <OrbitControls
+      <OrbitControls
         //prettier-ignore
-        minPolarAngle={Math.PI / 4}
-        maxPolarAngle={(3 * Math.PI) / 4}
-        minAzimuthAngle={(7 * Math.PI) / 4}
-        maxAzimuthAngle={Math.PI / 4}
-        enablePan={true}
+        // minPolarAngle={Math.PI / 4}
+        // maxPolarAngle={(3 * Math.PI) / 4}
+        // minAzimuthAngle={(7 * Math.PI) / 4}
+        // maxAzimuthAngle={Math.PI / 4}
+        enablePan={false}
         enableZoom={true}
-        enableRotate={true}
-      /> */}
+        minDistance={200}
+        maxDistance={500}
+        enableRotate={false}
+      />
       <Suspense fallback={null}>
         <Scene ref={starsForSelectiveBloom} bgScale={bgScale} dof={dof} />
         <Effects

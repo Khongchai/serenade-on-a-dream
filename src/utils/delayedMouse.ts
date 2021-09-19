@@ -12,9 +12,13 @@ export class DelayedMouse {
   delayedX: number;
   delayedY: number;
 
+  autopan: boolean;
+
   speedDiff: number;
 
-  constructor(speedDiff = 0.3) {
+  delta: number;
+
+  constructor(speedDiff = 0.3, autopan = false, delta = 0) {
     this.curX = 0;
     this.curY = 0;
 
@@ -24,17 +28,30 @@ export class DelayedMouse {
     this.delayedX = 0;
     this.delayedY = 0;
 
+    this.autopan = autopan;
+
     this.speedDiff = speedDiff;
+
+    this.delta = delta;
   }
 
-  updateMouse(curX: number, curY: number) {
+  updateMouse(curX: number, curY: number, delta: number) {
     this.curX = curX;
     this.curY = curY;
+    this.delta = delta;
 
     //Calculate delayed mouse
-    this.calculateDelayed();
+    if (!this.autopan) this.calculateDelayed();
+    else {
+      this.autoCurrent();
+      this.calculateDelayed();
+    }
 
     return { x: this.delayedX, y: this.delayedY };
+  }
+
+  setAutoPan(autopan: boolean) {
+    this.autopan = autopan;
   }
 
   calculateDelayed() {
@@ -43,5 +60,10 @@ export class DelayedMouse {
 
     this.delayedX += this.diffX * this.speedDiff;
     this.delayedY += this.diffY * this.speedDiff;
+  }
+
+  autoCurrent() {
+    this.curX = Math.sin(this.delta);
+    this.curY = Math.cos(this.delta);
   }
 }

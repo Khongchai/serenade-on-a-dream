@@ -3,7 +3,6 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { DelayedMouse } from "../../utils/delayedMouse";
-import usePointerPos from "../../utils/usePointerPos";
 import focusObjects0 from "../layers/0-focusObjects.png";
 import sparkles1 from "../layers/1-sparkles.png";
 import bigCloud2 from "../layers/2-bigCloud.png";
@@ -18,7 +17,11 @@ interface SceneProps {
   dof: React.MutableRefObject<any>;
 }
 
-const delayedMouse = new DelayedMouse(0.03);
+const delayedMouse = new DelayedMouse(0.03, false);
+/**
+ * Out here to prevent rerender
+ */
+let pointerPos = { x: 0, y: 0 };
 
 const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const fullScale = useAspect(2000, 2000, 0.25);
@@ -34,12 +37,34 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
 
   const allRef = useRef<any>();
 
-  const { pointerPos } = usePointerPos();
+  useEffect(() => {
+    window.addEventListener("mousemove", setNormalize);
+    window.addEventListener("touchmove", setNormalize);
 
-  useFrame(() => {
+    return () => {
+      window.removeEventListener("mousemove", setNormalize);
+      window.removeEventListener("touchmove", setNormalize);
+    };
+  }, []);
+  function setNormalize(e: MouseEvent | TouchEvent) {
+    if (e.type === "mousemove") {
+      pointerPos = {
+        x: ((e as MouseEvent).clientX / window.innerWidth) * 2 - 1,
+        y: -((e as MouseEvent).clientY / window.innerHeight) * 2 + 1,
+      };
+    } else {
+      pointerPos = {
+        x: ((e as TouchEvent).touches[0].clientX / window.innerWidth) * 2 - 1,
+        y: -((e as TouchEvent).touches[0].clientY / window.innerHeight) * 2 + 1,
+      };
+    }
+  }
+
+  useFrame((_, delta) => {
     const { x, y } = delayedMouse.updateMouse(
       pointerPos.x * 0.5,
-      pointerPos.y * 0.5
+      pointerPos.y * 0.5,
+      delta
     );
 
     allRef.current.rotation.y = x;
