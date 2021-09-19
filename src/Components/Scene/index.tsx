@@ -17,7 +17,8 @@ interface SceneProps {
   dof: React.MutableRefObject<any>;
 }
 
-const delayedMouse = new DelayedMouse(0.03, false);
+//See notes for auto pan
+const delayedMouse = new DelayedMouse(0.03, true);
 /**
  * Out here to prevent rerender
  */
@@ -74,21 +75,23 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   });
 
   return (
-    <group ref={allRef}>
-      <Sparkles ref={ref} scale={extraLargeScale} />
-      <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
-        <BackgroundShaderMaterial shaderTexture={bg} />
-      </Plane>
-      <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
-        <BackgroundShaderMaterial shaderTexture={moon} />
-      </Plane>
-      <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
-        <BackgroundShaderMaterial shaderTexture={bigCloud} />
-      </Plane>
-      <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
-        <BackgroundShaderMaterial shaderTexture={charactersCastle} />
-      </Plane>
-    </group>
+    <>
+      <group ref={allRef}>
+        <Sparkles ref={ref} scale={extraLargeScale} />
+        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
+          <BackgroundShaderMaterial shaderTexture={bg} />
+        </Plane>
+        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
+          <BackgroundShaderMaterial shaderTexture={moon} />
+        </Plane>
+        <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
+          <BackgroundShaderMaterial shaderTexture={bigCloud} />
+        </Plane>
+        <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
+          <BackgroundShaderMaterial shaderTexture={charactersCastle} />
+        </Plane>
+      </group>
+    </>
   );
 });
 

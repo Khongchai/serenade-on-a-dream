@@ -28,3 +28,10 @@ body,
   overflow: hidden;
   background: #010101;
 }
+
+#camera-control-button {
+  position: absolute;
+  bottom: min(5%, 50px);
+  left: 50%;
+  opacity: 0.4;
+}

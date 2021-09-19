@@ -38,7 +38,7 @@ export class DelayedMouse {
   updateMouse(curX: number, curY: number, delta: number) {
     this.curX = curX;
     this.curY = curY;
-    this.delta = delta;
+    this.delta += delta;
 
     //Calculate delayed mouse
     if (!this.autopan) this.calculateDelayed();
@@ -63,7 +63,7 @@ export class DelayedMouse {
   }
 
   autoCurrent() {
-    this.curX = Math.sin(this.delta);
-    this.curY = Math.cos(this.delta);
+    this.curX = Math.sin(this.delta * 0.15) * 0.4;
+    this.curY = Math.cos(this.delta * 0.1) * 0.2;
   }
 }

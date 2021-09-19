@@ -1,10 +1,6 @@
-Delayed touch stuff
-
 Maybe godrays as well?
 
-Camera movement auto panning.
-
-Troubleshoot stars stop moving when group rotates + when resizing
+begin auto pan when music plays or when user stops moving the mouse for x seconds
 
 add shooting stars
 
