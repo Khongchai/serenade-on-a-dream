@@ -1,7 +1,5 @@
 Maybe godrays as well?
 
-Twinkling stars
-
 begin auto pan when music plays or when user stops moving the mouse for x seconds
 
 add shooting stars => two types, one with the line thing and the other with the sphere technique you are trying to do

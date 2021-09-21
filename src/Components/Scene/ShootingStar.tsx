@@ -34,11 +34,11 @@ const ShootingStar: React.FC<ShootingStarProps> = ({ scale }) => {
   }, []);
 
   useFrame((_, delta) => {
-    // const shootingStarInterval = Math.sin(
-    //   (shootingStarMaterialRef.current.uniforms.uTime.value += delta)
-    // );
-    // shootingStarMaterialRef.current.uniforms.shootingStarInterval.value =
-    //   shootingStarInterval;
+    const shootingStarInterval = Math.sin(
+      (shootingStarMaterialRef.current.uniforms.uTime.value += delta)
+    );
+    shootingStarMaterialRef.current.uniforms.shootingStarInterval.value =
+      shootingStarInterval;
   });
 
   return (

@@ -53,6 +53,8 @@ export const fragmentShader = `
         vec2 modifiedPointCoord = ((gl_PointCoord - vec2(0.5)) * (rotationMatrix)) + vec2(0.5);
         
         vec4 color = texture2D(starTexture, modifiedPointCoord);
-        gl_FragColor = vec4(color.rgb * vColor, color.a * 0.6);
+        float k = 4.0;
+        float randValueForTwinkle = (sin(uTime * vPointSize * 0.00083) + k - 1.0) / k;
+        gl_FragColor = vec4(color.rgb * vColor, color.a * randValueForTwinkle + 0.05);
     }
 `;

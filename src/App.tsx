@@ -15,23 +15,23 @@ function App() {
     <>
       <Canvas
         style={{ width: "100vw", height: "100vh" }}
-        camera={{ position: [0, 0, 500], far: 3000, near: 0.11 }}
+        camera={{ position: [0, 0, 500] }}
         linear={true}
       >
         <pointLight ref={lightRef} />
         <OrbitControls
-        //test
-        // minPolarAngle={Math.PI / 4}
-        // maxPolarAngle={(3 * Math.PI) / 4}
-        // minAzimuthAngle={(7 * Math.PI) / 4}
-        // maxAzimuthAngle={Math.PI / 4}
+          // test
+          // minPolarAngle={Math.PI / 4}
+          // maxPolarAngle={(3 * Math.PI) / 4}
+          // minAzimuthAngle={(7 * Math.PI) / 4}
+          // maxAzimuthAngle={Math.PI / 4}
 
-        //prod
-        // enablePan={false}
-        // enableZoom={true}
-        // minDistance={200}
-        // maxDistance={500}
-        // enableRotate={false}
+          // prod
+          enablePan={false}
+          enableZoom={true}
+          minDistance={200}
+          maxDistance={500}
+          enableRotate={false}
         />
         <Suspense fallback={null}>
           <Scene ref={starsForSelectiveBloom} bgScale={bgScale} dof={dof} />
