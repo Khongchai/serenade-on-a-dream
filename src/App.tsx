@@ -1,6 +1,7 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
+import { useThree, useFrame } from "react-three-fiber";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
@@ -15,7 +16,7 @@ function App() {
     <>
       <Canvas
         style={{ width: "100vw", height: "100vh" }}
-        camera={{ position: [0, 0, 500] }}
+        camera={{position: [0, 0, 500]}}
         linear={true}
       >
         <pointLight ref={lightRef} />
@@ -27,7 +28,6 @@ function App() {
           // maxAzimuthAngle={Math.PI / 4}
 
           // prod
-          enablePan={false}
           enableZoom={true}
           minDistance={200}
           maxDistance={500}

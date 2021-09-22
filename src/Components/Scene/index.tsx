@@ -29,7 +29,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const fullScale = useAspect(2000, 2000, 0.25);
   const extraLargeScale = useAspect(...bgScale);
 
-  const focalPoint = useRef<any>();
+  const focalPoint = useRef<THREE.Mesh>();
   const [focusVector] = useState(() => new THREE.Vector3());
 
   const [charactersCastle, sparkles, bigCloud, clouds, moon, bg] = useLoader(
@@ -71,7 +71,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     allRef.current.rotation.y = x;
     allRef.current.rotation.x = -y;
 
-    dof.current.target = focusVector.lerp(focalPoint.current.position, 0.005);
+    dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
   });
 
   return (
@@ -88,7 +88,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
           <BackgroundShaderMaterial shaderTexture={bigCloud} />
         </Plane>
-        <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
+        <Plane args={[2, 2]} position-z={20}  ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={charactersCastle} />
         </Plane>
       </group>
