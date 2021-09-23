@@ -55,8 +55,9 @@ export class DelayedMouse {
   }
 
   calculateDelayed() {
-    this.diffX = this.curX - this.delayedX;
-    this.diffY = this.curY - this.delayedY;
+    //Also adds a sprinkle of hand-held motion
+    this.diffX = this.curX - this.delayedX + Math.sin(this.delta * 0.5) * 0.02;
+    this.diffY = this.curY - this.delayedY + Math.cos(this.delta) * 0.02;
 
     //Tween animation will be the integral of the right hand expression
     this.delayedX += this.diffX * this.speedDiff;
