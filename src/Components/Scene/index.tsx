@@ -78,9 +78,9 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   return (
     <>
       <group ref={allRef}>
-        <ShootingStars/>
-        <StarDome scale={extraLargeScale} />
-        <Sparkles ref={ref} scale={extraLargeScale} />
+        {/* <ShootingStars/>
+        <StarDome scale={extraLargeScale} /> */}
+        {/* <Sparkles ref={ref} scale={extraLargeScale} /> */}
         <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
