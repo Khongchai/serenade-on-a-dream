@@ -17,7 +17,7 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   /**
    * Initial
    */
-  const count = 400;
+  const count = 300;
   const initialStarsPositions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const sizeVariations = new Float32Array(count);

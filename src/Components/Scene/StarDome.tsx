@@ -7,9 +7,9 @@ interface ShootingStarProps {
   scale: [number, number, number];
 }
 
-const ShootingStar: React.FC<ShootingStarProps> = ({ scale }) => {
+const StarDome: React.FC<ShootingStarProps> = ({ scale }) => {
   const shootingStarMaterialRef = useRef<any>();
-  const count = 600;
+  const count = 100;
   const initialStarsPositions = new Float32Array(count * 3);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const ShootingStar: React.FC<ShootingStarProps> = ({ scale }) => {
       //But only half a circle to ensure that most of the shooting stars will happen where user can see them
       const radiusVariation = Math.random() * 0.9;
       const radius = 8 - radiusVariation;
-      const theta = Math.random() * Math.PI;
-      const phi = Math.random() * Math.PI;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI * 2;
       let x = 0;
       let y = 0;
       let z = 0;
@@ -72,4 +72,4 @@ const ShootingStar: React.FC<ShootingStarProps> = ({ scale }) => {
   );
 };
 
-export default ShootingStar;
+export default StarDome;

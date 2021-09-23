@@ -23,9 +23,9 @@ const Effects = React.forwardRef<
     <EffectComposer multisampling={0}>
       <DepthOfField
         ref={ref}
-        bokehScale={9}
+        // bokehScale={9}
         // disable bokeh
-        // bokehScale={0}
+        bokehScale={0}
         focalLength={0.1}
         width={width * 1.3}
         height={height * 1.3}

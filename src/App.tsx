@@ -28,10 +28,10 @@ function App() {
           // maxAzimuthAngle={Math.PI / 4}
 
           // prod
-          enableZoom={true}
-          minDistance={200}
-          maxDistance={500}
-          enableRotate={false}
+          // enableZoom={true}
+          // minDistance={200}
+          // maxDistance={500}
+          // enableRotate={false}
         />
         <Suspense fallback={null}>
           <Scene ref={starsForSelectiveBloom} bgScale={bgScale} dof={dof} />
