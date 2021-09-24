@@ -1,6 +1,6 @@
 import { Plane, useAspect } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { DelayedMouse } from "../../utils/delayedMouse";
 import focusObjects0 from "../layers/0-focusObjects.png";
@@ -77,11 +77,12 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
 
   return (
     <>
+
       <group ref={allRef}>
-        <ShootingStars/>
+      <ShootingStars colors={["red"]} count={10} radius={80}/>
         {/* <StarDome scale={extraLargeScale} /> */}
         {/* <Sparkles ref={ref} scale={extraLargeScale} /> */}
-        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
+        {/* <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
         <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
@@ -92,7 +93,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         </Plane>
         <Plane args={[2, 2]} position-z={20}  ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={charactersCastle} />
-        </Plane>
+        </Plane> */}
       </group>
     </>
   );

@@ -1,10 +1,10 @@
-import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef } from "react";
-import { useThree, useFrame } from "react-three-fiber";
+import { Suspense, useRef } from "react";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
+import ShootingStars from "./Components/Scene/ShootingStars";
 
 function App() {
   const dof = useRef<any>();
@@ -14,6 +14,8 @@ function App() {
 
   return (
     <>
+
+
       <Canvas
         style={{ width: "100vw", height: "100vh" }}
         camera={{position: [0, 0, 500]}}

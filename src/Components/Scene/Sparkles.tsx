@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
-import { useLoader } from "react-three-fiber";
+import { useLoader } from "@react-three/fiber";
 import { fragmentShader, vertexShader } from "../glsl/sparklesMaterial";
 import starShape from "../layers/star-shape.png";
 import * as THREE from "three";
