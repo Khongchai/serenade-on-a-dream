@@ -72,17 +72,17 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     // allRef.current.rotation.y = x;
     // allRef.current.rotation.x = -y;
 
-    // dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
+    dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
   });
 
   return (
     <>
 
       <group ref={allRef}>
-      <ShootingStars colors={["red"]} count={10} radius={80}/>
+      <ShootingStars colors={["red"]} count={10}/>
         {/* <StarDome scale={extraLargeScale} /> */}
         {/* <Sparkles ref={ref} scale={extraLargeScale} /> */}
-        {/* <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
+        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
         <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
@@ -93,7 +93,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         </Plane>
         <Plane args={[2, 2]} position-z={20}  ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={charactersCastle} />
-        </Plane> */}
+        </Plane>
       </group>
     </>
   );
