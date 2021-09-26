@@ -1,4 +1,4 @@
-import { useAspect } from "@react-three/drei";
+import { CurveModifier, useAspect } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useMemo } from "react";
 import * as THREE from "three";
@@ -19,7 +19,6 @@ const r = () => Math.random() + 0.01 * 1;
   const scale = useMemo(() => {
     return width / 1920; 
   },[width]);
-
   const lineGeometry = new THREE.BufferGeometry().setFromPoints(curve);
   const lineMaterial = new THREE.LineBasicMaterial({color: "white"});
   
@@ -42,7 +41,7 @@ export default function Fireflies(
     for (let i = 0; i < pathsCount; i++){
         const randomAngle = Math.max(Math.random() * 3, 1); 
 
-        const startingPos = new THREE.Vector3(Math.sin(0) * r() * radius, Math.cos(0) * r() * radius * 4 - 100, 0);
+        const startingPos = new THREE.Vector3(Math.sin(0) * r() * radius -50, Math.cos(0) * r() * radius * 4 - 200 , 0);
         const points: THREE.Vector3[] = [];
         
         for (let angle = 0; angle < (Math.PI * 2); angle += (Math.PI * 2) / dotsCount){
@@ -52,8 +51,7 @@ export default function Fireflies(
 
             points.push(startingPos.add(new THREE.Vector3(x, y, z)).clone());
         }
-        const arcSegments = 100;
-        const curve = new THREE.CatmullRomCurve3(points).getPoints(arcSegments);
+        const curve = new THREE.CatmullRomCurve3(points).getPoints(100);
 
         const path = {
               color: colors[colors.length * Math.random()],
@@ -71,8 +69,10 @@ export default function Fireflies(
     //The position attribute is THREE.Vector3
     // @ts-ignore
     <group position={[-450, -250, -200]}>
-      {lines.map((props, index) => (
-        <Path key={index} {...props} />
+      {lines.map((props, index) => ( 
+        <>
+          <Path key={index} {...props} />
+        </>
       ))}
     </group>
   );
