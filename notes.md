@@ -2,7 +2,7 @@ Maybe godrays as well?
 
 begin auto pan when music plays or when user stops moving the mouse for x seconds
 
-add shooting stars => two types, one with the line thing and the other with the sphere technique you are trying to do
+add shooting stars => two types, one with the line thing and the other with the sphere technique you are trying to do, focus first on the former
 
 see notes for trail of stars
 
