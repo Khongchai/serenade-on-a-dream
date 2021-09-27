@@ -4,6 +4,7 @@ import { Suspense, useRef } from "react";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
+import ShootingStars from "./Components/Scene/ShootingStars";
 
 function App() {
   const dof = useRef<any>();
@@ -13,9 +14,11 @@ function App() {
 
   return (
     <>
+
+
       <Canvas
         style={{ width: "100vw", height: "100vh" }}
-        camera={{ position: [0, 0, 500] }}
+        camera={{position: [0, 0, 500]}}
         linear={true}
       >
         <pointLight ref={lightRef} />
@@ -27,11 +30,10 @@ function App() {
           // maxAzimuthAngle={Math.PI / 4}
 
           // prod
-          enablePan={false}
-          enableZoom={true}
-          minDistance={200}
-          maxDistance={500}
-          enableRotate={false}
+          // enableZoom={true}
+          // minDistance={200}
+          // maxDistance={500}
+          // enableRotate={false}
         />
         <Suspense fallback={null}>
           <Scene ref={starsForSelectiveBloom} bgScale={bgScale} dof={dof} />

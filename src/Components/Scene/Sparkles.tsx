@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
-import { useLoader } from "react-three-fiber";
+import { useLoader } from "@react-three/fiber";
 import { fragmentShader, vertexShader } from "../glsl/sparklesMaterial";
 import starShape from "../layers/star-shape.png";
 import * as THREE from "three";
@@ -17,7 +17,7 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   /**
    * Initial
    */
-  const count = 400;
+  const count = 300;
   const initialStarsPositions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
   const sizeVariations = new Float32Array(count);

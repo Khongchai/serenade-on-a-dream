@@ -5,7 +5,7 @@ import {
   SelectiveBloom,
 } from "@react-three/postprocessing";
 import React from "react";
-import { useThree } from "react-three-fiber";
+import { useThree } from "@react-three/fiber"
 
 const Effects = React.forwardRef<
   any,
