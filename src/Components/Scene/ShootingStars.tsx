@@ -1,8 +1,7 @@
-import { Box, CurveModifier, Plane } from "@react-three/drei";
+import { Box } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
-import { PlaneBufferGeometry } from "three";
 import { fragmentShader, vertexShader } from "../glsl/shootingStarMaterial";
 
 const r = () => Math.random() + 0.01 * 1;
@@ -36,52 +35,32 @@ const Path = ({
   );
 
   const curveRef = useRef<any>();
-  const speed = useMemo(() => Math.max(0.0007, Math.random() * 0.005), []);
+  const speed = useMemo(() => Math.max(0.04, Math.random() * 0.4), []);
 
-  const materialRef = useRef<any>();
+  const boxRef = useRef<any>();
+  const shaderRef = useRef<any>();
   useFrame((_, delta) => {
-    if (materialRef.current) {
-      materialRef.current.uniforms.uTime.value =
-        (materialRef.current.uniforms.uTime.value + delta) % 1;
-      const t = materialRef.current.uniforms.uTime.value;
-
-      const binormal = new THREE.Vector3();
-      const position = curve.getPointAt(t);
-
-      const frames = curve.computeFrenetFrames(curveSegments, true);
-      const segments = frames.tangents.length;
-
-      const currentSegment = Math.floor(t * segments);
-      const nextSegment = (currentSegment + 1) % segments;
-
-      binormal.subVectors(
-        frames.binormals[currentSegment],
-        frames.binormals[nextSegment]
-      );
-    }
-
     // if (curveRef.current) {
     //   curveRef.current.moveAlongCurve(speed);
     // }
+    if (shaderRef.current && boxRef.current) {
+      const pointInCurve =
+        (shaderRef.current.uniforms.position.value += delta * speed) % 1;
+      const nextPosition = curve.getPointAt(pointInCurve);
+      boxRef.current.position.copy(nextPosition);
+    }
   });
 
   return (
     <>
-      <Box args={[20, 20, 20]}>
-        <shaderMaterial ref={materialRef} uniforms={{ uTime: { value: 0 } }} />
+      <Box args={[20, 20, 20]} ref={boxRef}>
+        <shaderMaterial
+          fragmentShader={fragmentShader}
+          vertexShader={vertexShader}
+          ref={shaderRef}
+          uniforms={{ position: { value: 0 } }}
+        />
       </Box>
-      {/* <CurveModifier ref={curveRef} curve={curve}>
-        <Box args={[20, 20, 20]}>
-          <shaderMaterial />
-        </Box>
-      </CurveModifier> */}
-      {/* line is for visually debugging path */}
-      {/* <line
-        //@ts-ignore
-        geometry={lineGeometry}
-        color="red"
-        material={lineMaterial}
-      /> */}
     </>
   );
 };
@@ -97,8 +76,8 @@ export default function Fireflies({
 }) {
   const lines = useMemo(() => {
     let paths = [];
-    const pathsCount = 1;
-    // const pathsCount = 6;
+    // const pathsCount = 1;
+    const pathsCount = 6;
     const dotsCount = 20;
 
     for (let i = 0; i < pathsCount; i++) {
