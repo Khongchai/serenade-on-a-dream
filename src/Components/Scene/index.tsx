@@ -35,9 +35,8 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const focalPoint = useRef<THREE.Mesh>();
   const [focusVector] = useState(() => new THREE.Vector3());
 
-  const [charactersCastle, _, bigCloud, clouds, moon, bg] = useLoader(
-    THREE.TextureLoader,
-    [
+  const [charactersCastle, _, bigCloud, clouds, moon, bg, serenade, onADream] =
+    useLoader(THREE.TextureLoader, [
       focusObjects0,
       sparkles1,
       bigCloud2,
@@ -46,8 +45,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
       bgElem5,
       textSerenade,
       textOnADream,
-    ]
-  );
+    ]);
 
   const allRef = useRef<any>();
 
@@ -104,6 +102,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={charactersCastle} />
         </Plane>
+
         <Plane
           args={[2, 2]}
           position-z={20.5}
@@ -111,6 +110,13 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         >
           <BackgroundShaderMaterial shaderTexture={clouds} uOpacity={0.65} />
         </Plane>
+        {/* Not yet visible, ask artist what to do */}
+        {/* <Plane args={[2, 2]} position-z={22} ref={focalPoint} scale={fullScale}>
+          <BackgroundShaderMaterial shaderTexture={serenade} />
+        </Plane>
+        <Plane args={[2, 2]} position-z={22} ref={focalPoint} scale={fullScale}>
+          <BackgroundShaderMaterial shaderTexture={onADream} />
+        </Plane> */}
       </group>
     </>
   );
