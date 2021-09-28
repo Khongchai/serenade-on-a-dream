@@ -1,9 +1,8 @@
-import { useFrame, useThree } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import React, { useEffect, useRef } from "react";
-import { useLoader } from "@react-three/fiber";
+import * as THREE from "three";
 import { fragmentShader, vertexShader } from "../glsl/sparklesMaterial";
 import starShape from "../layers/star-shape.png";
-import * as THREE from "three";
 
 interface SparklesProps {
   scale: [number, number, number];

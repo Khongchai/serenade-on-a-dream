@@ -1,13 +1,14 @@
 import { Box } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useLoader } from "@react-three/fiber";
 import React, { useMemo, useRef } from "react";
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "../glsl/shootingStarMaterial";
-
-const r = () => Math.random() + 0.01 * 1;
+import starShape from "../layers/star-shape.png";
 
 //Move along curve https://github.com/pmndrs/drei#curvemodifier
 //Spline examples: https://github.com/mrdoob/three.js/blob/master/examples/webgl_geometry_extrude_splines.html
+
+const r = () => Math.random() + 0.01 * 1;
 
 /**
  *
@@ -18,52 +19,46 @@ const Path = ({
   curve,
   width: _,
   color: __,
+  starTexture,
 }: {
   curve: THREE.CatmullRomCurve3;
   width: number;
   color: THREE.Color | string;
+  starTexture: THREE.Texture;
 }) => {
-  const curveSegments = 100;
-  const lineGeometry = useMemo(
-    () =>
-      new THREE.BufferGeometry().setFromPoints(curve.getPoints(curveSegments)),
+  const minVal = 0.1;
+  const valInsteadOfZero = minVal;
+  const speed = useMemo(
+    () => Math.max(Math.random() * 0.35 || valInsteadOfZero, minVal),
     []
   );
-  const lineMaterial = useMemo(
-    () => new THREE.LineBasicMaterial({ color: "white" }),
-    []
-  );
-
-  const curveRef = useRef<any>();
-  const speed = useMemo(() => Math.max(0.04, Math.random() * 0.4), []);
 
   const boxRef = useRef<any>();
   const shaderRef = useRef<any>();
   useFrame((_, delta) => {
-    if (shaderRef.current && boxRef.current) {
-      const pointInCurve =
-        (shaderRef.current.uniforms.position.value += delta * speed) % 1;
-      const nextPosition = curve.getPointAt(pointInCurve);
-      boxRef.current.position.copy(nextPosition);
-    }
+    const pointInCurve =
+      (shaderRef.current.uniforms.position.value += delta * speed) % 1;
+    const nextPosition = curve.getPointAt(pointInCurve);
+    boxRef.current.position.copy(nextPosition);
   });
 
   return (
-    <>
-      <Box args={[20, 20, 20]} ref={boxRef}>
-        <shaderMaterial
-          fragmentShader={fragmentShader}
-          vertexShader={vertexShader}
-          ref={shaderRef}
-          uniforms={{ position: { value: 0 } }}
-        />
-      </Box>
-    </>
+    <Box args={[20, 20, 20]} ref={boxRef}>
+      <shaderMaterial
+        fragmentShader={fragmentShader}
+        vertexShader={vertexShader}
+        ref={shaderRef}
+        uniforms={{
+          position: { value: 0 },
+          starTexture: { value: starTexture },
+        }}
+      />
+    </Box>
   );
 };
 
 export default function Fireflies({
-  count,
+  count: _,
   colors,
   radius = 200,
 }: {
@@ -71,9 +66,10 @@ export default function Fireflies({
   colors: string | string[];
   radius?: number;
 }) {
+  const [starTexture] = useLoader(THREE.TextureLoader, [starShape]);
+
   const lines = useMemo(() => {
-    let paths = [];
-    // const pathsCount = 1;
+    let pathProps = [];
     const pathsCount = 6;
     const dotsCount = 20;
 
@@ -102,15 +98,14 @@ export default function Fireflies({
       // const frames = curve.computeFrenetFrames(100, true);
       // frames.tangents.length;
 
-      const path = {
+      pathProps.push({
         color: colors[colors.length * Math.random()],
         width: Math.max(1.6, (2 * i) / 10),
+        starTexture,
         curve,
-      };
-
-      paths.push(path);
+      });
     }
-    return paths;
+    return pathProps;
   }, []);
 
   return (
