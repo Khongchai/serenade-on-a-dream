@@ -10,7 +10,6 @@ interface SparklesProps {
 
 const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   const sparklesMaterialRef = useRef<any>();
-  //Moon texture is for testing, remove when done.
   const [starTexture] = useLoader(THREE.TextureLoader, [starShape]);
 
   /**

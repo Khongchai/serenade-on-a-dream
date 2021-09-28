@@ -64,13 +64,13 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   }
 
   useFrame((_, delta) => {
-    // const { x, y } = delayedMouse.updateMouse(
-    //   pointerPos.x * 0.5,
-    //   pointerPos.y * 0.5,
-    //   delta
-    // );
-    // allRef.current.rotation.y = x;
-    // allRef.current.rotation.x = -y;
+    const { x, y } = delayedMouse.updateMouse(
+      pointerPos.x * 0.5,
+      pointerPos.y * 0.5,
+      delta
+    );
+    allRef.current.rotation.y = x;
+    allRef.current.rotation.x = -y;
 
     dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
   });
@@ -79,8 +79,8 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     <>
       <group ref={allRef}>
         <ShootingStars colors={["red"]} count={10} />
-        {/* <StarDome scale={extraLargeScale} /> */}
-        {/* <Sparkles ref={ref} scale={extraLargeScale} /> */}
+        <StarDome scale={extraLargeScale} />
+        <Sparkles ref={ref} scale={extraLargeScale} />
         <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
