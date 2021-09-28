@@ -40,19 +40,24 @@ const Path = ({
 
   const materialRef = useRef<any>();
   useFrame((_, delta) => {
-    if (curveRef.current) {
-      curveRef.current.uniforms.uTime += delta % 1;
-      const t = curveRef.current.uniforms.uTime;
+    if (materialRef.current) {
+      materialRef.current.uniforms.uTime.value =
+        (materialRef.current.uniforms.uTime.value + delta) % 1;
+      const t = materialRef.current.uniforms.uTime.value;
 
-      const position = new THREE.Vector3();
       const binormal = new THREE.Vector3();
+      const position = curve.getPointAt(t);
 
-      curve.getPointAt(delta, position);
-      const segments = curve.computeFrenetFrames(curveSegments, true).tangents
-        .length;
+      const frames = curve.computeFrenetFrames(curveSegments, true);
+      const segments = frames.tangents.length;
 
       const currentSegment = Math.floor(t * segments);
-      console.log(currentSegment);
+      const nextSegment = (currentSegment + 1) % segments;
+
+      binormal.subVectors(
+        frames.binormals[currentSegment],
+        frames.binormals[nextSegment]
+      );
     }
 
     // if (curveRef.current) {

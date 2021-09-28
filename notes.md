@@ -1,4 +1,4 @@
-Make the thing follows the line yourself, so that you can use the custom shaders.
+Make the thing follows the line yourself, so that you can use the custom shaders. => find out what subvector is
 
 Optimize shooting star geometry to 1 but just instanced 8 times.
 
