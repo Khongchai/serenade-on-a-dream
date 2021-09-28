@@ -9,6 +9,8 @@ import bigCloud2 from "../layers/2-bigCloud.png";
 import clouds3 from "../layers/3-clouds.png";
 import moon4 from "../layers/4-moon.png";
 import bgElem5 from "../layers/5-bgElem.png";
+import textSerenade from "../layers/text-serenade.png";
+import textOnADream from "../layers/text-on-a-dream.png";
 import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
 import StarDome from "./StarDome";
 import Sparkles from "./Sparkles";
@@ -33,9 +35,18 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const focalPoint = useRef<THREE.Mesh>();
   const [focusVector] = useState(() => new THREE.Vector3());
 
-  const [charactersCastle, _, bigCloud, __, moon, bg] = useLoader(
+  const [charactersCastle, _, bigCloud, clouds, moon, bg] = useLoader(
     THREE.TextureLoader,
-    [focusObjects0, sparkles1, bigCloud2, clouds3, moon4, bgElem5]
+    [
+      focusObjects0,
+      sparkles1,
+      bigCloud2,
+      clouds3,
+      moon4,
+      bgElem5,
+      textSerenade,
+      textOnADream,
+    ]
   );
 
   const allRef = useRef<any>();
@@ -92,6 +103,13 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         </Plane>
         <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={charactersCastle} />
+        </Plane>
+        <Plane
+          args={[2, 2]}
+          position-z={20.5}
+          scale={extraLargeScale.map((num) => num * 0.9) as any}
+        >
+          <BackgroundShaderMaterial shaderTexture={clouds} uOpacity={0.65} />
         </Plane>
       </group>
     </>

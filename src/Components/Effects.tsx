@@ -1,28 +1,33 @@
+import { useFrame, useThree } from "@react-three/fiber";
 import {
   Bloom,
   DepthOfField,
   EffectComposer,
-  SelectiveBloom,
 } from "@react-three/postprocessing";
-import React from "react";
-import { useThree } from "@react-three/fiber";
+import React, { useRef } from "react";
+
+let time = 0;
 
 const Effects = React.forwardRef<
   any,
   {
     bgScale: [number, number, number];
-    starsForSelectiveBloom: React.MutableRefObject<any>;
-    lightRef: React.MutableRefObject<any>;
   }
->(({ bgScale: _, starsForSelectiveBloom, lightRef }, ref) => {
+>(({ bgScale: _ }, dofRef) => {
   const {
     viewport: { width, height },
   } = useThree();
 
+  const bloomRef = useRef<any>();
+
+  useFrame((_, delta) => {
+    time += (delta % 2) * Math.PI;
+    bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 10 + 0.5;
+  });
   return (
     <EffectComposer multisampling={0}>
       <DepthOfField
-        ref={ref}
+        ref={dofRef}
         bokehScale={9}
         // disable bokeh
         // bokehScale={0}
@@ -31,7 +36,8 @@ const Effects = React.forwardRef<
         height={height * 1.3}
       />
       <Bloom
-        luminanceThreshold={0.45}
+        ref={bloomRef}
+        luminanceThreshold={0.25}
         //AE feathering
         luminanceSmoothing={0.5}
         height={300}

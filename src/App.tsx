@@ -4,12 +4,9 @@ import { Suspense, useRef } from "react";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
 import Scene from "./Components/Scene";
-import ShootingStars from "./Components/Scene/ShootingStars";
 
 function App() {
   const dof = useRef<any>();
-  const starsForSelectiveBloom = useRef<any>();
-  const lightRef = useRef<any>();
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
 
   return (
@@ -19,7 +16,6 @@ function App() {
         camera={{ position: [0, 0, 500] }}
         linear={true}
       >
-        <pointLight ref={lightRef} />
         <OrbitControls
           // test
           // minPolarAngle={Math.PI / 4}
@@ -34,13 +30,8 @@ function App() {
           enableRotate={false}
         />
         <Suspense fallback={null}>
-          <Scene ref={starsForSelectiveBloom} bgScale={bgScale} dof={dof} />
-          <Effects
-            ref={dof}
-            bgScale={bgScale}
-            lightRef={lightRef}
-            starsForSelectiveBloom={starsForSelectiveBloom}
-          />
+          <Scene bgScale={bgScale} dof={dof} />
+          <Effects ref={dof} bgScale={bgScale} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>

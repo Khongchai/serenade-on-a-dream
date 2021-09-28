@@ -16,6 +16,7 @@ export const fragmentShader = `
 
     uniform sampler2D uTexture;
     uniform vec3 backgroundColor;
+    uniform float uOpacity;
 
     varying vec2 vUv;
 
@@ -26,6 +27,6 @@ export const fragmentShader = `
         float edgeLocation = -pow((2.0 * vUv.x - 1.0), 8.0) + 1.0;
 
         vec3 newUv = mix(backgroundColor, textureColor.rgb, edgeLocation);
-        gl_FragColor = vec4(newUv, textureColor.a);
+        gl_FragColor = vec4(newUv, textureColor.a * uOpacity);
     }
 `;
