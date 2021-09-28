@@ -78,8 +78,6 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
           uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
           //1920 = ideal
           uWindowWidthRatio: { value: window.innerWidth / 1920 },
-          //When value is 1, shooting star will occur at a random spot
-          shootingStarInterval: { value: 0 },
         }}
         ref={sparklesMaterialRef}
         vertexShader={vertexShader}

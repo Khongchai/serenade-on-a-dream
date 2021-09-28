@@ -33,7 +33,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
   const focalPoint = useRef<THREE.Mesh>();
   const [focusVector] = useState(() => new THREE.Vector3());
 
-  const [charactersCastle, sparkles, bigCloud, clouds, moon, bg] = useLoader(
+  const [charactersCastle, _, bigCloud, __, moon, bg] = useLoader(
     THREE.TextureLoader,
     [focusObjects0, sparkles1, bigCloud2, clouds3, moon4, bgElem5]
   );

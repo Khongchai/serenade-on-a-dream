@@ -1,6 +1,6 @@
-import { Box } from "@react-three/drei";
+import { Box, Plane } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import React, { useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "../glsl/shootingStarMaterial";
 import starShape from "../layers/star-shape.png";
@@ -33,17 +33,34 @@ const Path = ({
     []
   );
 
-  const boxRef = useRef<any>();
+  const objRef = useRef<any>();
   const shaderRef = useRef<any>();
+
+  useEffect(() => {
+    const mainYellowRGB = { r: 1, g: 244 / 255, b: 40 / 255 };
+    const randValueZeroOrOne = Math.floor(Math.random() * 2);
+    const colors = {
+      r: randValueZeroOrOne || mainYellowRGB.r,
+      g: randValueZeroOrOne || mainYellowRGB.g,
+      b: randValueZeroOrOne || mainYellowRGB.b,
+    };
+    shaderRef.current.uniforms.uColor.value = colors;
+  }, []);
+
   useFrame((_, delta) => {
     const pointInCurve =
       (shaderRef.current.uniforms.position.value += delta * speed) % 1;
     const nextPosition = curve.getPointAt(pointInCurve);
-    boxRef.current.position.copy(nextPosition);
+    objRef.current.position.copy(nextPosition);
+
+    shaderRef.current.uniforms.uTime.value = delta;
   });
 
   return (
-    <Box args={[20, 20, 20]} ref={boxRef}>
+    /**
+     * TODO => Optimize with either a bulk render or use points.
+     */
+    <Plane ref={objRef} args={[10, 10, 1]}>
       <shaderMaterial
         fragmentShader={fragmentShader}
         vertexShader={vertexShader}
@@ -51,9 +68,16 @@ const Path = ({
         uniforms={{
           position: { value: 0 },
           starTexture: { value: starTexture },
+          uColor: { value: new THREE.Color() },
+          uTime: { value: 0 },
         }}
+        attach="material"
+        transparent={true}
+        depthWrite={false}
+        blending={THREE.AdditiveBlending}
+        side={THREE.DoubleSide}
       />
-    </Box>
+    </Plane>
   );
 };
 
