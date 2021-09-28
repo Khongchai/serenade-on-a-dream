@@ -1,5 +1,6 @@
-fix meshline problem: create a new project and use only meshline.
-troubleshoot further by looking at the error again.
+Make the thing follows the line yourself, so that you can use the custom shaders.
+
+Optimize shooting star geometry to 1 but just instanced 8 times.
 
 add shooting stars => two types, one with the line thing and the other with the sphere technique you are trying to do, focus first on the former
 

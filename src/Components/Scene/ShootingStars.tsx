@@ -1,11 +1,14 @@
-import { CurveModifier, useAspect } from "@react-three/drei";
-import { useFrame, useThree } from "@react-three/fiber";
+import { Box, CurveModifier, Plane } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import React, { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
+import { PlaneBufferGeometry } from "three";
+import { fragmentShader, vertexShader } from "../glsl/shootingStarMaterial";
 
 const r = () => Math.random() + 0.01 * 1;
 
 //Move along curve https://github.com/pmndrs/drei#curvemodifier
+//Spline examples: https://github.com/mrdoob/three.js/blob/master/examples/webgl_geometry_extrude_splines.html
 
 /**
  *
@@ -15,7 +18,7 @@ const r = () => Math.random() + 0.01 * 1;
 const Path = ({
   curve,
   width: _,
-  color,
+  color: __,
 }: {
   curve: THREE.CatmullRomCurve3;
   width: number;
@@ -35,27 +38,45 @@ const Path = ({
   const curveRef = useRef<any>();
   const speed = useMemo(() => Math.max(0.0007, Math.random() * 0.005), []);
 
-  useFrame(() => {
+  const materialRef = useRef<any>();
+  useFrame((_, delta) => {
     if (curveRef.current) {
-      curveRef.current.moveAlongCurve(speed);
+      curveRef.current.uniforms.uTime += delta % 1;
+      const t = curveRef.current.uniforms.uTime;
+
+      const position = new THREE.Vector3();
+      const binormal = new THREE.Vector3();
+
+      curve.getPointAt(delta, position);
+      const segments = curve.computeFrenetFrames(curveSegments, true).tangents
+        .length;
+
+      const currentSegment = Math.floor(t * segments);
+      console.log(currentSegment);
     }
+
+    // if (curveRef.current) {
+    //   curveRef.current.moveAlongCurve(speed);
+    // }
   });
 
   return (
     <>
-      <CurveModifier ref={curveRef} curve={curve}>
-        <mesh>
-          <boxGeometry args={[20, 20, 20]} />
-          <meshBasicMaterial />
-        </mesh>
-      </CurveModifier>
+      <Box args={[20, 20, 20]}>
+        <shaderMaterial ref={materialRef} uniforms={{ uTime: { value: 0 } }} />
+      </Box>
+      {/* <CurveModifier ref={curveRef} curve={curve}>
+        <Box args={[20, 20, 20]}>
+          <shaderMaterial />
+        </Box>
+      </CurveModifier> */}
       {/* line is for visually debugging path */}
-      <line
+      {/* <line
         //@ts-ignore
         geometry={lineGeometry}
         color="red"
         material={lineMaterial}
-      />
+      /> */}
     </>
   );
 };
@@ -71,7 +92,8 @@ export default function Fireflies({
 }) {
   const lines = useMemo(() => {
     let paths = [];
-    const pathsCount = 6;
+    const pathsCount = 1;
+    // const pathsCount = 6;
     const dotsCount = 20;
 
     for (let i = 0; i < pathsCount; i++) {
@@ -95,7 +117,9 @@ export default function Fireflies({
 
         points.push(startingPos.add(new THREE.Vector3(x, y, z)).clone());
       }
-      const curve = new THREE.CatmullRomCurve3(points);
+      const curve = new THREE.CatmullRomCurve3(points, true);
+      // const frames = curve.computeFrenetFrames(100, true);
+      // frames.tangents.length;
 
       const path = {
         color: colors[colors.length * Math.random()],
