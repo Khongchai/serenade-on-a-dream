@@ -40,9 +40,6 @@ const Path = ({
   const boxRef = useRef<any>();
   const shaderRef = useRef<any>();
   useFrame((_, delta) => {
-    // if (curveRef.current) {
-    //   curveRef.current.moveAlongCurve(speed);
-    // }
     if (shaderRef.current && boxRef.current) {
       const pointInCurve =
         (shaderRef.current.uniforms.position.value += delta * speed) % 1;
