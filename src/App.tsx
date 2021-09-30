@@ -1,8 +1,10 @@
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, useProgress } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import * as THREE from "three";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Components/Effects";
+import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
 
 function App() {
@@ -35,6 +37,7 @@ function App() {
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
+      <Loader />
     </>
   );
 }

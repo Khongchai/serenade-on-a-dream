@@ -22,7 +22,7 @@ const Effects = React.forwardRef<
 
   useFrame((_, delta) => {
     time += (delta % 2) * Math.PI;
-    bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 10 + 0.7;
+    bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 7 + 0.7;
   });
   return (
     <EffectComposer multisampling={0}>
@@ -37,7 +37,7 @@ const Effects = React.forwardRef<
       />
       <Bloom
         ref={bloomRef}
-        luminanceThreshold={0.65}
+        luminanceThreshold={0.58}
         //AE feathering
         luminanceSmoothing={0.5}
         height={300}

@@ -1,6 +1,6 @@
-import { Box, Plane } from "@react-three/drei";
+import { Plane } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import React, { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "../glsl/shootingStarMaterial";
 import starShape from "../layers/star-shape.png";
@@ -119,8 +119,6 @@ export default function Fireflies({
         points.push(startingPos.add(new THREE.Vector3(x, y, z)).clone());
       }
       const curve = new THREE.CatmullRomCurve3(points, true);
-      // const frames = curve.computeFrenetFrames(100, true);
-      // frames.tangents.length;
 
       pathProps.push({
         color: colors[colors.length * Math.random()],
@@ -133,8 +131,6 @@ export default function Fireflies({
   }, []);
 
   return (
-    //The position attribute is THREE.Vector3
-    // @ts-ignore
     <group>
       {lines.map((props, index) => (
         <Path key={index} {...props} />

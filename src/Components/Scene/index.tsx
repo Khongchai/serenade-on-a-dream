@@ -102,7 +102,6 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
         <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={charactersCastle} />
         </Plane>
-
         <Plane
           args={[2, 2]}
           position-z={20.5}
