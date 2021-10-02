@@ -14,6 +14,7 @@
     "@types/react": "^17.0.21",
     "@types/react-dom": "^17.0.9",
     "@types/three": "^0.131.1",
+    "postprocessing": "^6.23.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",

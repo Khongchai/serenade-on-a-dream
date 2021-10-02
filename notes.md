@@ -1,4 +1,4 @@
-Make the thing follows the line yourself, so that you can use the custom shaders. => find out what subvector is
+For the loading screen, look at the shaderMaterials example and put the album cover + the transition image in there to test transition.
 
 Optimize shooting star geometry to 1 but just instanced 8 times.
 

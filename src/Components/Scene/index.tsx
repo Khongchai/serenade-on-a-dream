@@ -81,7 +81,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     allRef.current.rotation.y = x;
     allRef.current.rotation.x = -y;
 
-    dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
+    // dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
   });
 
   return (

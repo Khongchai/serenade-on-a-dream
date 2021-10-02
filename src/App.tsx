@@ -1,9 +1,8 @@
-import { OrbitControls, useProgress } from "@react-three/drei";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useEffect, useRef, useState } from "react";
-import * as THREE from "three";
+import { Suspense, useRef } from "react";
 import { backgroundColor } from "./Components/const";
-import Effects from "./Components/Effects";
+import Effects from "./Effects";
 import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
 
@@ -32,12 +31,12 @@ function App() {
           enableRotate={false}
         />
         <Suspense fallback={null}>
-          <Scene bgScale={bgScale} dof={dof} />
           <Effects ref={dof} bgScale={bgScale} />
+          <Scene bgScale={bgScale} dof={dof} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
-      <Loader />
+      {/* <Loader /> */}
     </>
   );
 }
