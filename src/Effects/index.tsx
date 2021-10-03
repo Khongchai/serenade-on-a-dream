@@ -33,12 +33,7 @@ const Effects = React.forwardRef<
     const renderScene = new RenderPass(scene, camera);
     comp.addPass(renderScene);
 
-    const finalPass = new ShaderPass(
-      new ShaderMaterial({
-        vertexShader: customFadeInFX.vertexShader,
-        fragmentShader: customFadeInFX.fragmentShader,
-      })
-    );
+    const finalPass = new ShaderPass(new ShaderMaterial(customFadeInFX));
     comp.addPass(finalPass);
     comp.renderToScreen = true;
     return comp;
@@ -49,8 +44,8 @@ const Effects = React.forwardRef<
   }, [width, height]);
 
   useFrame((_, delta) => {
-    time += (delta % 2) * Math.PI;
-    bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 7 + 0.7;
+    // time += (delta % 2) * Math.PI;
+    // bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 7 + 0.7;
 
     //testing below
     finalEffectComposer.render();
@@ -58,7 +53,7 @@ const Effects = React.forwardRef<
 
   return (
     <>
-      <FiberEffectComposer multisampling={0}>
+      {/* <FiberEffectComposer multisampling={0}>
         <DepthOfField
           ref={dofRef}
           bokehScale={9}
@@ -76,7 +71,7 @@ const Effects = React.forwardRef<
           height={300}
           opacity={0.8}
         />
-      </FiberEffectComposer>
+      </FiberEffectComposer> */}
     </>
   );
 });
