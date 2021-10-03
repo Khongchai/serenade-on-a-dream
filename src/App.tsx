@@ -31,10 +31,10 @@ function App() {
           enableRotate={false}
         />
         <Suspense fallback={null}>
-          <Effects ref={dof} bgScale={bgScale} />
           <Scene bgScale={bgScale} dof={dof} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
+        <Effects ref={dof} bgScale={bgScale} />
       </Canvas>
       {/* <Loader /> */}
     </>

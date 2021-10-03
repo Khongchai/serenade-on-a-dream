@@ -6,20 +6,10 @@ import {
 } from "@react-three/postprocessing";
 import React, { useEffect, useMemo, useRef } from "react";
 import customFadeInFX from "../Components/glsl/customFadeInFX";
-import {
-  SMAAImageLoader,
-  BlendFunction,
-  KernelSize,
-  BloomEffect,
-  EffectComposer,
-  EffectPass,
-  RenderPass,
-  SMAAEffect,
-  GammaCorrectionEffect,
-  BokehEffect,
-
-  //@ts-ignore
-} from "postprocessing";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
+import { ShaderMaterial } from "three";
 
 let time = 0;
 
@@ -31,43 +21,44 @@ const Effects = React.forwardRef<
 >(({ bgScale: _ }, dofRef) => {
   const {
     viewport: { width, height },
+    gl,
+    scene,
+    camera,
   } = useThree();
 
   const bloomRef = useRef<any>();
-  const { gl, scene, camera } = useThree();
-  const composer = useMemo(() => {
-    const composer = new EffectComposer(gl);
-    composer.addPass(new RenderPass(scene, camera));
-    const gammaCorrection = new GammaCorrectionEffect();
-    const bloom = new BloomEffect({
-      blendFunction: BlendFunction.ADD,
-      kernelSize: KernelSize.HUGE,
-      luminanceThreshold: 0.1,
-      height: 600,
-    });
-    bloom.blendMode.opacity.value = 2;
-    const bokehEffect = new BokehEffect({
-      focus: 0.8,
-      dof: 0.05,
-      aperture: 0.2,
-      maxBlur: 0.015,
-    });
-    composer.addPass(new EffectPass(camera, bokehEffect));
-    const effectPass = new EffectPass(camera, gammaCorrection, bloom);
-    effectPass.renderToScreen = true;
-    composer.addPass(effectPass);
-    return composer;
+  const finalEffectComposer = useMemo(() => {
+    const comp = new EffectComposer(gl);
+
+    const renderScene = new RenderPass(scene, camera);
+    comp.addPass(renderScene);
+
+    const finalPass = new ShaderPass(
+      new ShaderMaterial({
+        vertexShader: customFadeInFX.vertexShader,
+        fragmentShader: customFadeInFX.fragmentShader,
+      })
+    );
+    comp.addPass(finalPass);
+    comp.renderToScreen = true;
+    return comp;
   }, []);
 
+  useEffect(() => {
+    finalEffectComposer.setSize(width, height);
+  }, [width, height]);
+
   useFrame((_, delta) => {
-    // time += (delta % 2) * Math.PI;
-    // bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 7 + 0.7;
-    composer.render(delta);
-  });
+    time += (delta % 2) * Math.PI;
+    bloomRef.current.blendMode.opacity.value = Math.sin(1.2 * time) / 7 + 0.7;
+
+    //testing below
+    finalEffectComposer.render();
+  }, 1);
 
   return (
     <>
-      {/* <FiberEffectComposer ref={fxComposerRef} multisampling={0}>
+      <FiberEffectComposer multisampling={0}>
         <DepthOfField
           ref={dofRef}
           bokehScale={9}
@@ -85,15 +76,7 @@ const Effects = React.forwardRef<
           height={300}
           opacity={0.8}
         />
-      </FiberEffectComposer> */}
-      {/* <extendedEffectComposer>
-        <renderPass attachArray="passes" args={[scene, camera]} />
-        <shaderPass
-          attachArray="passes"
-          args={[customFadeInFX]}
-          needsSwap={false}
-        />
-      </extendedEffectComposer> */}
+      </FiberEffectComposer>
     </>
   );
 });
