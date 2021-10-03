@@ -1,6 +1,6 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useState } from "react";
 import { backgroundColor } from "./Components/const";
 import Effects from "./Effects";
 import Loader from "./Components/Loader";
@@ -9,12 +9,19 @@ import Scene from "./Components/Scene";
 function App() {
   const dof = useRef<any>();
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
+  const [depthOfField, setDepthOfField] = useState();
 
   return (
     <>
       <Canvas
         style={{ width: "100vw", height: "100vh" }}
         camera={{ position: [0, 0, 500] }}
+        gl={{
+          powerPreference: "high-performance",
+          antialias: false,
+          stencil: false,
+          depth: false,
+        }}
         linear={true}
       >
         <OrbitControls

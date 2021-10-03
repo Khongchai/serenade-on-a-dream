@@ -1,4 +1,4 @@
-For the loading screen, look at the shaderMaterials example and put the album cover + the transition image in there to test transition.
+Focus on refactoring all effects to be imperative first, then we can move to transitioning entrance using the new shaderPass. => all to imperative now except dof; working on that.
 
 Optimize shooting star geometry to 1 but just instanced 8 times.
 
