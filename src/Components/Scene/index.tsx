@@ -1,6 +1,6 @@
 import { Plane, useAspect } from "@react-three/drei";
 import { useFrame, useLoader } from "@react-three/fiber";
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { DelayedMouse } from "../../utils/delayedMouse";
 import focusObjects0 from "../layers/0-focusObjects.png";
@@ -9,12 +9,12 @@ import bigCloud2 from "../layers/2-bigCloud.png";
 import clouds3 from "../layers/3-clouds.png";
 import moon4 from "../layers/4-moon.png";
 import bgElem5 from "../layers/5-bgElem.png";
-import textSerenade from "../layers/text-serenade.png";
 import textOnADream from "../layers/text-on-a-dream.png";
+import textSerenade from "../layers/text-serenade.png";
 import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
-import StarDome from "./StarDome";
-import Sparkles from "./Sparkles";
 import ShootingStars from "./ShootingStars";
+import Sparkles from "./Sparkles";
+import StarDome from "./StarDome";
 
 interface SceneProps {
   bgScale: [number, number, number];

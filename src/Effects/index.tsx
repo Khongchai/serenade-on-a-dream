@@ -1,18 +1,17 @@
 import { extend, useFrame, useThree } from "@react-three/fiber";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import customFadeInFX from "../Components/glsl/customFadeInFX";
-import { EffectComposer as EffectComposerType } from "three/examples/jsm/postprocessing/EffectComposer";
-import { ShaderMaterial } from "three";
 import {
-  RenderPass,
-  EffectPass,
-  ShaderPass,
-  EffectComposer,
-  DepthOfFieldEffect,
   BloomEffect,
-  //@ts-ignore
+  DepthOfFieldEffect,
+  EffectComposer,
+  EffectPass,
+  RenderPass,
+  ShaderPass,
+  // @ts-ignore
 } from "postprocessing";
-import * as THREE from "three";
+import React, { useEffect, useMemo } from "react";
+import { ShaderMaterial } from "three";
+import { EffectComposer as EffectComposerType } from "three/examples/jsm/postprocessing/EffectComposer";
+import customFadeInFX from "../Components/glsl/customFadeInFX";
 
 extend({ ShaderPass });
 

@@ -1,10 +1,9 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef, useState } from "react";
+import { Suspense, useRef } from "react";
 import { backgroundColor } from "./Components/const";
-import Effects from "./Effects";
-import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
+import Effects from "./Effects";
 
 function App() {
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
