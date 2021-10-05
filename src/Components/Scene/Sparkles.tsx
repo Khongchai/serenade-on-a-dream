@@ -8,7 +8,7 @@ interface SparklesProps {
   scale: [number, number, number];
 }
 
-const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
+const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
   const sparklesMaterialRef = useRef<any>();
   const [starTexture] = useLoader(THREE.TextureLoader, [starShape]);
 
@@ -49,7 +49,7 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
   });
 
   return (
-    <points scale={scale} ref={ref} position-z={-19}>
+    <points scale={scale} position-z={-19}>
       <bufferGeometry attach="geometry">
         <bufferAttribute
           attachObject={["attributes", "position"]}
@@ -88,7 +88,7 @@ const Sparkles = React.forwardRef<any, SparklesProps>(({ scale }, ref) => {
       />
     </points>
   );
-});
+};
 
 export default Sparkles;
 

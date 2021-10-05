@@ -18,7 +18,7 @@ import ShootingStars from "./ShootingStars";
 
 interface SceneProps {
   bgScale: [number, number, number];
-  dof: React.MutableRefObject<any>;
+  depthOfField: any;
 }
 
 //See notes for auto pan
@@ -28,7 +28,7 @@ const delayedMouse = new DelayedMouse(0.03, false);
  */
 let pointerPos = { x: 0, y: 0 };
 
-const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
+const Scene: React.FC<SceneProps> = ({ bgScale, depthOfField }) => {
   const fullScale = useAspect(2000, 2000, 0.25);
   const extraLargeScale = useAspect(...bgScale);
 
@@ -81,7 +81,12 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
     allRef.current.rotation.y = x;
     allRef.current.rotation.x = -y;
 
-    // dof.current.target = focusVector.lerp(focalPoint.current!.position, 0.005);
+    if (depthOfField.current) {
+      depthOfField.current.target = focusVector.lerp(
+        focalPoint.current!.position,
+        0.005
+      );
+    }
   });
 
   return (
@@ -89,7 +94,7 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
       <group ref={allRef}>
         <ShootingStars colors={["red"]} count={10} />
         <StarDome scale={extraLargeScale} />
-        <Sparkles ref={ref} scale={extraLargeScale} />
+        <Sparkles scale={extraLargeScale} />
         <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
@@ -119,6 +124,6 @@ const Scene = React.forwardRef<any, SceneProps>(({ dof, bgScale }, ref) => {
       </group>
     </>
   );
-});
+};
 
 export default Scene;

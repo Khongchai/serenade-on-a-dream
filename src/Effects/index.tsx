@@ -1,13 +1,6 @@
 import { extend, useFrame, useThree } from "@react-three/fiber";
-import {
-  Bloom,
-  DepthOfField,
-  EffectComposer as FiberEffectComposer,
-} from "@react-three/postprocessing";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import customFadeInFX from "../Components/glsl/customFadeInFX";
-// import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-// import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass";
 import { EffectComposer as EffectComposerType } from "three/examples/jsm/postprocessing/EffectComposer";
 import { ShaderMaterial } from "three";
 import {
@@ -19,17 +12,15 @@ import {
   BloomEffect,
   //@ts-ignore
 } from "postprocessing";
+import * as THREE from "three";
 
 extend({ ShaderPass });
 
 let time = 0;
 
-const Effects = React.forwardRef<
-  any,
-  {
-    bgScale: [number, number, number];
-  }
->(({ bgScale: _ }, dofRef) => {
+const Effects: React.FC<{
+  depthOfField: any;
+}> = ({ depthOfField }) => {
   const {
     gl,
     scene,
@@ -42,7 +33,7 @@ const Effects = React.forwardRef<
 
     const renderPass = new RenderPass(scene, camera);
 
-    const depthOfFieldEffect = new DepthOfFieldEffect({
+    const depthOfFieldEffect = new DepthOfFieldEffect(camera, {
       bokehScale: 9,
       focalLength: 0.08,
       width: width * 1.3,
@@ -54,7 +45,7 @@ const Effects = React.forwardRef<
       height: 300,
       opacity: 0.8,
     });
-    const effectPass = new EffectPass(camera, bloomEffect);
+    const effectPass = new EffectPass(camera, depthOfFieldEffect, bloomEffect);
     const shaderPass = new ShaderPass(
       new ShaderMaterial(customFadeInFX),
       "tDiffuse"
@@ -62,23 +53,24 @@ const Effects = React.forwardRef<
 
     comp.addPass(renderPass);
     comp.addPass(effectPass);
-    comp.addPass(shaderPass);
+    // comp.addPass(shaderPass);
 
     return [comp, depthOfFieldEffect, bloomEffect];
   }, []);
 
   useEffect(() => {
+    depthOfField.current = dof;
     comp.setSize(width, height);
   }, [width, height]);
 
   useFrame((_, delta) => {
     time += (delta % 2) * Math.PI;
-    bloom.blendMode.opacity.value = Math.sin(1.2 * time) / 6 + 0.7;
+    bloom.blendMode.opacity.value = Math.sin(1.2 * time) / 5 + 0.7;
 
     comp.render();
   }, 1);
 
   return null;
-});
+};
 
 export default Effects;

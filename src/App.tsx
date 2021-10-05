@@ -7,9 +7,8 @@ import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
 
 function App() {
-  const dof = useRef<any>();
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
-  const [depthOfField, setDepthOfField] = useState();
+  const depthOfField = useRef();
 
   return (
     <>
@@ -38,10 +37,10 @@ function App() {
           enableRotate={false}
         />
         <Suspense fallback={null}>
-          <Scene bgScale={bgScale} dof={dof} />
+          <Scene bgScale={bgScale} depthOfField={depthOfField} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
-        <Effects ref={dof} bgScale={bgScale} />
+        <Effects depthOfField={depthOfField} />
       </Canvas>
       {/* <Loader /> */}
     </>
