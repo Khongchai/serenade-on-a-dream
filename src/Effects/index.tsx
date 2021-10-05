@@ -31,10 +31,10 @@ const Effects = React.forwardRef<
   }
 >(({ bgScale: _ }, dofRef) => {
   const {
-    viewport: { width, height },
     gl,
     scene,
     camera,
+    size: { width, height },
   } = useThree();
 
   const [comp, dof, bloom] = useMemo(() => {
@@ -54,7 +54,7 @@ const Effects = React.forwardRef<
       height: 300,
       opacity: 0.8,
     });
-    const effectPass = new EffectPass(camera, depthOfFieldEffect, bloomEffect);
+    const effectPass = new EffectPass(camera, bloomEffect);
     const shaderPass = new ShaderPass(
       new ShaderMaterial(customFadeInFX),
       "tDiffuse"

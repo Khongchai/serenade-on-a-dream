@@ -1,4 +1,4 @@
-Focus on refactoring all effects to be imperative first, then we can move to transitioning entrance using the new shaderPass. => all to imperative now except dof; working on that.
+Focus on refactoring all effects to be imperative first, then we can move to transitioning entrance using the new shaderPass. => all to imperative now except dof; working on that. => adding another effect pass and aspect ratio becomes messed up...wut?
 
 Optimize shooting star geometry to 1 but just instanced 8 times.
 

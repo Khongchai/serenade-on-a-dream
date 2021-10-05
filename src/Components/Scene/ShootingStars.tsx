@@ -81,7 +81,7 @@ const Path = ({
   );
 };
 
-export default function Fireflies({
+export default function ShootingStars({
   count: _,
   colors,
   radius = 200,
