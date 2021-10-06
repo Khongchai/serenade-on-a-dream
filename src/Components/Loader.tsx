@@ -22,9 +22,20 @@ const Loader: React.FC<LoaderProps> = ({}) => {
          * use percentage make background color fade to backgroundColor from default (as of writing, white).
          */
         const prog = progress / 100;
+
+        //target rgb
         const [r, g, b] = backgroundColor.rgb;
-        const currentColor = { r: prog * r, g: prog * g, b: prog * b };
-        progressContainer.current!.style.backgroundColor = `rgb(${currentColor.r}, ${currentColor.g}, ${currentColor.b})`;
+
+        //values to subtract from white
+        const { vr, vg, vb } = {
+          vr: (255 - r) * prog,
+          vg: (255 - g) * prog,
+          vb: (255 - b) * prog,
+        };
+
+        progressContainer.current!.style.backgroundColor = `rgb(${255 - vr}, ${
+          255 - vg
+        }, ${255 - vb})`;
       }
     };
 
@@ -33,6 +44,7 @@ const Loader: React.FC<LoaderProps> = ({}) => {
         progressContainer.current.classList.add("slowly-fadeout-and-poof");
         progressContainer.current.onanimationend = () => {
           progressContainer.current!.style.opacity = "0";
+          progressContainer.current!.style.display = "none";
         };
       }
     };
