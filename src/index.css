@@ -36,11 +36,30 @@ body,
   opacity: 0.4;
 }
 
-#progress-bar {
+#progress-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   color: white;
+  display: grid;
+  place-items: center;
+  background-color: white;
+  transition: 0.3s;
+}
+#progress {
+  font-size: 30px;
+  color: black;
+}
+.slowly-fadeout-and-poof {
+  animation: fadeout-disappear 0.3s;
+}
+@keyframes fadeout-disappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
