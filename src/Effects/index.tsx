@@ -13,8 +13,6 @@ import { ShaderMaterial } from "three";
 import { EffectComposer as EffectComposerType } from "three/examples/jsm/postprocessing/EffectComposer";
 import customFadeInFX from "../Components/glsl/customFadeInFX";
 
-extend({ ShaderPass });
-
 let time = 0;
 
 const Effects: React.FC<{
@@ -33,10 +31,8 @@ const Effects: React.FC<{
     const renderPass = new RenderPass(scene, camera);
 
     const depthOfFieldEffect = new DepthOfFieldEffect(camera, {
-      bokehScale: 9,
+      bokehScale: 3.75,
       focalLength: 0.08,
-      width: width * 1.3,
-      height: height * 1.3,
     });
     const bloomEffect = new BloomEffect({
       luminanceThreshold: 0.58,
@@ -52,7 +48,7 @@ const Effects: React.FC<{
 
     comp.addPass(renderPass);
     comp.addPass(effectPass);
-    // comp.addPass(shaderPass);
+    comp.addPass(shaderPass);
 
     return [comp, depthOfFieldEffect, bloomEffect];
   }, []);
