@@ -35,6 +35,7 @@ const Scene: React.FC<SceneProps> = ({ bgScale, depthOfField }) => {
   const focalPoint = useRef<THREE.Mesh>();
   const [focusVector] = useState(() => new THREE.Vector3());
 
+  //TODO => use text or not?
   const [charactersCastle, _, bigCloud, clouds, moon, bg, serenade, onADream] =
     useLoader(THREE.TextureLoader, [
       focusObjects0,

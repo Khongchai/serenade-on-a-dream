@@ -37,9 +37,9 @@ function App() {
         />
         <Suspense fallback={null}>
           <Scene bgScale={bgScale} depthOfField={depthOfField} />
+          <Effects depthOfField={depthOfField} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
-        <Effects depthOfField={depthOfField} />
       </Canvas>
       {/* <Loader /> */}
     </>
