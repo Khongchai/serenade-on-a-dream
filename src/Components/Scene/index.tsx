@@ -66,10 +66,14 @@ const Scene: React.FC<SceneProps> = ({ bgScale, depthOfField }) => {
         y: -((e as MouseEvent).clientY / window.innerHeight) * 2 + 1,
       };
     } else {
-      pointerPos = {
-        x: ((e as TouchEvent).touches[0].clientX / window.innerWidth) * 2 - 1,
-        y: -((e as TouchEvent).touches[0].clientY / window.innerHeight) * 2 + 1,
-      };
+      if ((e as TouchEvent).touches.length === 1) {
+        pointerPos = {
+          x: ((e as TouchEvent).touches[0].clientX / window.innerWidth) * 2 - 1,
+          y:
+            -((e as TouchEvent).touches[0].clientY / window.innerHeight) * 2 +
+            1,
+        };
+      }
     }
   }
 

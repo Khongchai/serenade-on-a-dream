@@ -50,7 +50,7 @@ body,
 }
 #progress {
   font-size: 30px;
-  mix-blend-mode: difference;
+  color: black;
 }
 .slowly-fadeout-and-poof {
   animation: fadeout-disappear 0.3s;
