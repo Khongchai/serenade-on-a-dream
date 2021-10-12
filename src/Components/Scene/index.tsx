@@ -22,7 +22,7 @@ interface SceneProps {
 }
 
 //See notes for auto pan
-const delayedMouse = new DelayedMouse(0.03, false);
+const delayedMouse = new DelayedMouse(0.03, true);
 /**
  * Out here to prevent rerender
  */

@@ -20,20 +20,20 @@ const Path = ({
   width: _,
   color: __,
   starTexture,
+  weight,
 }: {
   curve: THREE.CatmullRomCurve3;
   width: number;
   color: THREE.Color | string;
   starTexture: THREE.Texture;
+  //Numerical bias based on the index
+  weight: number;
 }) => {
-  const minVal = 0.1;
+  const minVal = 0.01;
   const valInsteadOfZero = minVal;
   const speed = useMemo(
     () =>
-      Math.max(
-        Math.random() * 0.35 * Math.random() || valInsteadOfZero,
-        minVal
-      ),
+      Math.max(Math.random() * weight * 0.2 * 0.35 || valInsteadOfZero, minVal),
     []
   );
 
@@ -98,7 +98,7 @@ export default function ShootingStars({
 
   const lines = useMemo(() => {
     let pathProps = [];
-    const pathsCount = 6;
+    const pathsCount = 5;
     const dotsCount = 20;
 
     for (let i = 0; i < pathsCount; i++) {
@@ -109,6 +109,10 @@ export default function ShootingStars({
         Math.cos(0) * r() * radius * 4 - 600,
         -300
       );
+      const axis = new THREE.Vector3(0, 0, 1);
+      const angleRad = 0.17 * i;
+      startingPos.applyAxisAngle(axis, angleRad);
+
       const points: THREE.Vector3[] = [];
 
       for (
@@ -129,6 +133,7 @@ export default function ShootingStars({
         width: Math.max(1.6, (2 * i) / 10),
         starTexture,
         curve,
+        weight: i,
       });
     }
     return pathProps;
