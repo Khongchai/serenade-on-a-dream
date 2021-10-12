@@ -1,6 +1,6 @@
 import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { backgroundColor } from "./const";
+import { backgroundColor } from "../const";
 
 interface LoaderProps {}
 

@@ -1,0 +1,20 @@
+#audio-warning-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+#audio-warning-button {
+  color: white;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  border: none;
+  margin-top: 1rem;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+#audio-warning-button:hover {
+  opacity: 0.8;
+}

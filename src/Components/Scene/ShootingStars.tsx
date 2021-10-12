@@ -29,7 +29,11 @@ const Path = ({
   const minVal = 0.1;
   const valInsteadOfZero = minVal;
   const speed = useMemo(
-    () => Math.max(Math.random() * 0.35 || valInsteadOfZero, minVal),
+    () =>
+      Math.max(
+        Math.random() * 0.35 * Math.random() || valInsteadOfZero,
+        minVal
+      ),
     []
   );
 

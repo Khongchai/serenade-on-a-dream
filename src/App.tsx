@@ -1,16 +1,20 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useRef } from "react";
-import { backgroundColor } from "./Components/const";
+import { Suspense, useRef, useState } from "react";
+import AudioControls from "./Components/AudioControls";
+import { backgroundColor } from "./const";
 import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
 import Effects from "./Effects";
+import AudioWarning from "./Components/AudioWarning";
 
 function App() {
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
   const depthOfField = useRef();
 
-  return (
+  const [soundWarningShown, setSoundWarningShown] = useState(false);
+
+  return soundWarningShown ? (
     <>
       <Canvas
         style={{ width: "100vw", height: "100vh" }}
@@ -43,7 +47,10 @@ function App() {
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
       <Loader />
+      <AudioControls />
     </>
+  ) : (
+    <AudioWarning onClick={() => setSoundWarningShown(true)} />
   );
 }
 

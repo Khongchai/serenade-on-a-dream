@@ -1,0 +1,45 @@
+#controls-wrapper {
+  position: fixed;
+  display: flex;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  opacity: 0.9;
+  padding: 1rem 1rem;
+  transition: 0.3s;
+}
+
+#controls-wrapper-invisible {
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  opacity: 0.5;
+  padding: 1rem 1rem;
+  transition: 0.3s;
+}
+
+.visible {
+  opacity: 1 !important;
+}
+
+@media (min-width: 769px) {
+  #controls-wrapper {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  #controls-wrapper {
+    flex-direction: column;
+  }
+}
+
+.cog-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+button:focus {
+  outline: 1px solid white;
+}

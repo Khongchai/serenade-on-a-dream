@@ -1,6 +1,6 @@
 import React from "react";
 import { Texture, Color } from "three";
-import { backgroundColor } from "../const";
+import { backgroundColor } from "../../const";
 import { fragmentShader, vertexShader } from "../glsl/fadeToBackgroundMaterial";
 
 interface BackgroundShaderMaterialProps {
