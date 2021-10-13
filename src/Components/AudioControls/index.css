@@ -1,20 +1,12 @@
-#controls-wrapper,
-#controls-wrapper-invisible {
-  display: flex;
-  position: fixed;
-  width: 100vw;
-  bottom: 0;
-  transition: 0.3s;
-}
-
 #controls-wrapper {
   background: rgba(0, 0, 0, 0.5);
   opacity: 0.9;
   box-sizing: border-box;
-}
-
-#controls-wrapper-invisible {
-  opacity: 0.5;
+  display: flex;
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+  transition: opacity, background 0.3s;
 }
 
 .visible {
@@ -22,16 +14,14 @@
 }
 
 @media (min-width: 769px) {
-  #controls-wrapper,
-  #controls-wrapper-invisible {
+  #controls-wrapper {
     flex-direction: row;
     padding: 1rem 1rem;
   }
 }
 
 @media (max-width: 768px) {
-  #controls-wrapper,
-  #controls-wrapper-invisible {
+  #controls-wrapper {
     flex-direction: column;
     height: 100vh;
   }

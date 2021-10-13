@@ -2,6 +2,7 @@ import { Howl } from "howler";
 import React, { useEffect, useRef, useState } from "react";
 import returnMousePositionAsPercentageOfContainer from "../../utils/returnMousePositionAsPercentageOfContainer";
 import secondsToMinuteWithSeconds from "../../utils/secondsToMinutesWithSeconds";
+import useGetSeekData from "../audio-utils/useGetSeekPos";
 import "./audioSeeker.css";
 
 interface AudioSeekerProps {
@@ -12,21 +13,25 @@ const SeekerContainer: React.FC<AudioSeekerProps> = ({ player }) => {
   const duration = player
     ? secondsToMinuteWithSeconds(player.duration())
     : "0:00";
-  const [seekPercentage, setSeekpercentage] = useState(0);
 
-  const seek = () => {};
+  const {
+    seekPercentage,
+    seekPos,
+    setSeekPercentage,
+    setSeekPos: _,
+  } = useGetSeekData(player);
 
   return (
     <div id="seeker-wrapper">
-      <p>0:00</p>
+      <p>{seekPos}</p>
       <Seeker
-        onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        onClick={(clientX: number, boundingX: number, clientWidth: number) => {
           const percentage = returnMousePositionAsPercentageOfContainer(
-            e.clientX,
-            (e.target as HTMLElement).getBoundingClientRect().x,
-            (e.target as HTMLElement).clientWidth
+            clientX,
+            boundingX,
+            clientWidth
           );
-          setSeekpercentage(percentage);
+          setSeekPercentage(percentage);
         }}
         position={seekPercentage}
       />
@@ -38,17 +43,26 @@ const SeekerContainer: React.FC<AudioSeekerProps> = ({ player }) => {
 export default SeekerContainer;
 
 const Seeker: React.FC<{
-  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => any;
+  onClick: (clientX: number, boundingX: number, clientWidth: number) => any;
   position: number;
 }> = ({ onClick, position }) => {
   const fill = useRef<any>();
   useEffect(() => {
-    fill.current.style.transform = `translateX(${-100 + position}%)`;
+    fill.current.style.width = position.toFixed(2) + "%";
   }, [position]);
 
   return (
-    <div id="seeker" onClick={(e) => onClick(e)}>
-      <div id="seeker-fill" ref={fill} />
+    <div
+      id="seeker"
+      onClick={(e: any) => {
+        onClick(
+          e.clientX,
+          e.target.getBoundingClientRect().x,
+          e.target.clientWidth
+        );
+      }}
+    >
+      <div id="seeker-fill" style={{ pointerEvents: "none" }} ref={fill} />
     </div>
   );
 };

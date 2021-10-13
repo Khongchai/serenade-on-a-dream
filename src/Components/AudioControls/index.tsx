@@ -21,9 +21,15 @@ const AudioControls: React.FC = ({}) => {
   ];
 
   const [track, setTrack] = useState(1);
-  const nextTrack = () => setTrack((cur) => (cur + 1) % audioProps.length);
-  const prevTrack = () =>
+  const nextTrack = () => {
+    resetPlayerPos();
+    setTrack((cur) => (cur + 1) % audioProps.length);
+  };
+  const prevTrack = () => {
+    resetPlayerPos();
     setTrack((cur) => (cur - 1 >= 0 ? cur - 1 : audioProps.length - 1));
+  };
+  const resetPlayerPos = () => player && player.seek(0);
 
   /*
     using useMemo is a bit buggy for some reason? 
@@ -41,43 +47,42 @@ const AudioControls: React.FC = ({}) => {
 
   return (
     <>
-      {showControls ? (
-        <div id="controls-wrapper">
-          <CogButton onClick={() => setShowControls((stat) => !stat)} />
-          <Controls>
-            <div
-              style={{
-                width: "fit-content",
-                display: "grid",
-                placeItems: "center",
-                flex: "1",
+      <div
+        id="controls-wrapper"
+        style={{
+          background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
+        }}
+      >
+        <CogButton onClick={() => setShowControls((stat) => !stat)} />
+        <Controls showControls={showControls}>
+          <div
+            style={{
+              width: "fit-content",
+              display: "grid",
+              placeItems: "center",
+              flex: "1",
+            }}
+          >
+            <SongSelector
+              onClickBackward={() => prevTrack()}
+              onClickForward={() => nextTrack()}
+              songName={audioProps[track].name}
+            />
+            <PlayOrPauseButton
+              onClick={() => {
+                setPlayOrPause((state) =>
+                  state === "play" ? "pause" : "play"
+                );
+                if (player) {
+                  playOrPause === "play" ? player.pause() : player.play();
+                }
               }}
-            >
-              <SongSelector
-                onClickBackward={() => prevTrack()}
-                onClickForward={() => nextTrack()}
-                songName={audioProps[track].name}
-              />
-              <PlayOrPauseButton
-                onClick={() => {
-                  setPlayOrPause((state) =>
-                    state === "play" ? "pause" : "play"
-                  );
-                  if (player) {
-                    playOrPause === "play" ? player.pause() : player.play();
-                  }
-                }}
-                playOrPause={playOrPause}
-              />
-            </div>
-            <AudioSeeker player={player} />
-          </Controls>
-        </div>
-      ) : (
-        <div id="controls-wrapper-invisible">
-          <CogButton onClick={() => setShowControls((stat) => !stat)} />
-        </div>
-      )}
+              playOrPause={playOrPause}
+            />
+          </div>
+          <AudioSeeker player={player} />
+        </Controls>
+      </div>
     </>
   );
 };
