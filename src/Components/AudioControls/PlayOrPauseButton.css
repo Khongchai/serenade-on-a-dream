@@ -1,0 +1,13 @@
+.play-pause-wrapper {
+  width: fit-content;
+}
+.play-pause-buttons {
+  width: 30px;
+  height: 30px;
+  transition: transform 0.1s;
+  cursor: pointer;
+}
+
+.play-pause-buttons:hover {
+  transform: scale(1.2);
+}

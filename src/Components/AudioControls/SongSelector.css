@@ -1,0 +1,20 @@
+#song-selector-wrapper {
+  display: flex;
+  align-items: center;
+  color: white;
+  letter-spacing: 1px;
+}
+#song-selector-wrapper > * {
+  margin-left: 1rem;
+}
+
+.chevrons {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.chevrons:hover {
+  transform: scale(1.3);
+}

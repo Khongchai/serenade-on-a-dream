@@ -2,3 +2,7 @@
   flex: 1;
   transition: opacity 0.3s;
 }
+
+#controls > * {
+  margin-left: 1rem;
+}
