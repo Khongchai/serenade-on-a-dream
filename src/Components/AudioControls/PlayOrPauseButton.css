@@ -6,6 +6,7 @@
   height: 30px;
   transition: transform 0.1s;
   cursor: pointer;
+  filter: contrast(0);
 }
 
 .play-pause-buttons:hover {

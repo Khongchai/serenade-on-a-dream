@@ -1,8 +1,23 @@
 #controls {
   flex: 1;
   transition: opacity 0.3s;
+  display: flex;
 }
 
 #controls > * {
   margin-left: 1rem;
+}
+
+@media (min-width: 769px) {
+  #controls {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 768px) {
+  #controls {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
 }

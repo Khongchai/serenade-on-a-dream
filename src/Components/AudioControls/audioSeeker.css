@@ -1,0 +1,32 @@
+#seeker-wrapper {
+  color: white;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+#seeker-wrapper > * {
+  margin-left: 1rem;
+}
+
+#seeker {
+  width: 100%;
+  background: white;
+  height: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+#seeker-fill {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  transition: 0.3s;
+  transform: translateX(-100%);
+  background: #2f344b;
+}

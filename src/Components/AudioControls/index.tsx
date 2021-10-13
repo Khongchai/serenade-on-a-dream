@@ -1,6 +1,7 @@
 import { Howl } from "howler";
 import React, { useEffect, useRef, useState } from "react";
 import { AudioProps } from "../../Types";
+import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
 import Controls from "./Controls";
 import "./index.css";
@@ -27,7 +28,7 @@ const AudioControls: React.FC = ({}) => {
   /*
     using useMemo is a bit buggy for some reason? 
   */
-  const [player, setPlayer] = useState<Howl | null>(null);
+  const [player, setPlayer] = useState<Howl | undefined>(undefined);
   useEffect(() => {
     player && player.stop();
     setPlayer(
@@ -49,6 +50,7 @@ const AudioControls: React.FC = ({}) => {
                 width: "fit-content",
                 display: "grid",
                 placeItems: "center",
+                flex: "1",
               }}
             >
               <SongSelector
@@ -68,6 +70,7 @@ const AudioControls: React.FC = ({}) => {
                 playOrPause={playOrPause}
               />
             </div>
+            <AudioSeeker player={player} />
           </Controls>
         </div>
       ) : (
