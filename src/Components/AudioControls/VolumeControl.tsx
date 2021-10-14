@@ -1,5 +1,6 @@
 import { Howl } from "howler";
-import React from "react";
+import React, { useState } from "react";
+import Fader from "./Fader";
 import "./volumeControl.css";
 
 interface VolumeControlProps {
@@ -7,9 +8,16 @@ interface VolumeControlProps {
 }
 
 const VolumeControl: React.FC<VolumeControlProps> = ({ player }) => {
+  const [volumeLevel, setVolumeLevel] = useState(player.volume());
+  const adjustVolume = (faderPercentage: number) => {
+    player.volume(faderPercentage / 100);
+    setVolumeLevel(player.volume());
+  };
+
   return (
     <div id="volume-control-container">
       <img alt="speaker-icon" src="icons/speaker-icon.png" id="speaker-icon" />
+      <Fader position={volumeLevel * 100} action={adjustVolume} />
     </div>
   );
 };
