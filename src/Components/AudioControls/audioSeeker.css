@@ -1,4 +1,4 @@
-#seeker-wrapper {
+.seeker-wrapper {
   color: white;
   display: flex;
   align-items: center;
@@ -6,42 +6,43 @@
   width: 100%;
 }
 
-#seeker-wrapper > * {
+.seeker-wrapper > * {
   margin: 0 0.5rem;
 }
-#seeker,
-#seeker-fill {
+.seeker,
+.seeker-fill {
   border-radius: 5px;
   padding: 0;
 }
 
-#seeker {
+.seeker {
   width: 100%;
   background: white;
   height: 8px;
   cursor: pointer;
+  margin: 0;
 }
 
-#seeker-fill {
+.seeker-fill {
   width: 0%;
   height: 100%;
   background: #2f344b;
   position: relative;
 }
 
-#seeker-knob {
+.seeker-knob {
   width: 20px;
   height: 20px;
   position: absolute;
   border-radius: 50%;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateX(50%);
   right: 0;
   background: #2f344b;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.3s;
 }
 
-#seeker:hover #seeker-knob {
-  transform: scale(1.3) translateY(-45%);
+.seeker:hover .seeker-knob {
+  transform: scale(1.3) translateY(-45%) translateX(50%);
 }

@@ -7,6 +7,7 @@ import Controls from "./Controls";
 import "./index.css";
 import PlayOrPauseButton from "./PlayOrPauseButton";
 import SongSelector from "./SongSelector";
+import VolumeControl from "./VolumeControl";
 
 const AudioControls: React.FC = ({}) => {
   const audioProps: AudioProps[] = [
@@ -63,6 +64,7 @@ const AudioControls: React.FC = ({}) => {
           background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
         }}
       >
+        <div></div>
         <CogButton onClick={() => setShowControls((stat) => !stat)} />
         <Controls showControls={showControls}>
           <div
@@ -91,6 +93,9 @@ const AudioControls: React.FC = ({}) => {
             />
           </div>
           <AudioSeeker player={player} />
+          <div style={{ flex: 0.4 }}>
+            {player ? <VolumeControl player={player} /> : null}
+          </div>
         </Controls>
       </div>
     </>

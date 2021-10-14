@@ -35,7 +35,7 @@ const SeekerContainer: React.FC<AudioSeekerProps> = ({ player }) => {
   };
 
   return (
-    <div id="seeker-wrapper">
+    <div className="seeker-wrapper">
       <p>{seekPos}</p>
       <Seeker seekFn={seekFn} position={seekPercentage} />
       <p>{duration}</p>
@@ -61,7 +61,7 @@ const Seeker: React.FC<{
   const seekerRef = useRef<any>();
   const seek = (e: any) =>
     seekFn(
-      e.clientX,
+      e.clientX || e.touches[0].clientX,
       seekerRef.current.getBoundingClientRect().x,
       seekerRef.current.clientWidth
     );
@@ -71,7 +71,7 @@ const Seeker: React.FC<{
 
   return (
     <div
-      id="seeker"
+      className="seeker"
       ref={seekerRef}
       onMouseDown={() => triggerMoveFunction() && setTouchingFader(true)}
       onTouchStart={() => setTouchingFader(true)}
@@ -81,8 +81,8 @@ const Seeker: React.FC<{
       }}
       onTouchMove={(e: any) => touchingFader && seek(e)}
     >
-      <div id="seeker-fill" style={{ pointerEvents: "none" }} ref={fill}>
-        <div id="seeker-knob" />
+      <div className="seeker-fill" style={{ pointerEvents: "none" }} ref={fill}>
+        <div className="seeker-knob" />
       </div>
     </div>
   );
