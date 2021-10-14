@@ -3,12 +3,12 @@
   display: flex;
   align-items: center;
   flex: 1;
+  width: 100%;
 }
 
 #seeker-wrapper > * {
-  margin-left: 1rem;
+  margin: 0 0.5rem;
 }
-
 #seeker,
 #seeker-fill {
   border-radius: 5px;

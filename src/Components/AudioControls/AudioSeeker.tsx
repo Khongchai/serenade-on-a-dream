@@ -1,8 +1,11 @@
 import { Howl } from "howler";
-import React, { TouchEvent, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import returnMousePositionAsPercentageOfContainer from "../../utils/returnMousePositionAsPercentageOfContainer";
 import secondsToMinuteWithSeconds from "../../utils/secondsToMinutesWithSeconds";
 import useGetSeekData from "../audio-utils/useGetSeekPos";
+import useGlobalMouseMoveEvent from "../audio-utils/useGlobalMouseMoveEvent";
+import useSetFillPosition from "../audio-utils/useSetFillLength";
+import useVanillaRef from "../audio-utils/useVanillaRef";
 import "./audioSeeker.css";
 
 interface AudioSeekerProps {
@@ -47,60 +50,36 @@ const Seeker: React.FC<{
   position: number;
 }> = ({ seekFn, position }) => {
   const fill = useRef<any>();
-
-  useEffect(() => {
-    fill.current.style.width = position.toFixed(2) + "%";
-  }, [position]);
+  useSetFillPosition(fill, position);
 
   const [touchingFader, setTouchingFader] = useState(false);
+
   //For vanilla js reference
-  const touchingFaderRef = useRef(touchingFader);
-  useEffect(() => {
-    touchingFaderRef.current = touchingFader;
-  }, [touchingFader]);
+  const touchingFaderRef = useVanillaRef(touchingFader);
 
-  const seek = (e: any) =>
-    touchingFader &&
-    seekFn(
-      e.clientX || e.touches[0].clientX,
-      e.target.getBoundingClientRect().x,
-      e.target.clientWidth
-    );
-
-  /**
-   * This will allow the user to move the mouse anywhere while adjusting the knob
-   */
+  //This will allow the user to move the mouse anywhere while adjusting the knob
   const seekerRef = useRef<any>();
-  const globalMouseMove = (e: any) => {
-    if (touchingFaderRef.current) {
-      seekFn(
-        e.clientX,
-        seekerRef.current.getBoundingClientRect().x,
-        seekerRef.current.clientWidth
-      );
-    }
-  };
-
-  const addGlobalMouseMove = () => {
-    window.addEventListener("mousemove", globalMouseMove);
-    return true;
-  };
-  const removeGlobalMouseMove = () => {
-    setTouchingFader(false);
-  };
-  useEffect(() => {
-    window.addEventListener("mouseup", removeGlobalMouseMove);
-    return () => window.removeEventListener("mouseup", removeGlobalMouseMove);
-  }, []);
+  const seek = (e: any) =>
+    seekFn(
+      e.clientX,
+      seekerRef.current.getBoundingClientRect().x,
+      seekerRef.current.clientWidth
+    );
+  const seekIfFaderDown = (e: any) => touchingFaderRef.current && seek(e);
+  //prettier-ignore
+  const { triggerMoveFunction } = useGlobalMouseMoveEvent(seekIfFaderDown, () => setTouchingFader(false));
 
   return (
     <div
       id="seeker"
       ref={seekerRef}
-      onMouseDown={() => addGlobalMouseMove() && setTouchingFader(true)}
+      onMouseDown={() => triggerMoveFunction() && setTouchingFader(true)}
       onTouchStart={() => setTouchingFader(true)}
       onTouchEnd={() => setTouchingFader(false)}
-      onTouchMove={seek}
+      onClick={(e) => {
+        seek(e);
+      }}
+      onTouchMove={(e: any) => touchingFader && seek(e)}
     >
       <div id="seeker-fill" style={{ pointerEvents: "none" }} ref={fill}>
         <div id="seeker-knob" />
