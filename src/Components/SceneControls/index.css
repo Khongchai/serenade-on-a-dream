@@ -27,6 +27,12 @@
   }
 }
 
+.double-component-container {
+  width: fit-content;
+  display: grid;
+  place-items: center;
+}
+
 .cog-button {
   background: none;
   border: none;

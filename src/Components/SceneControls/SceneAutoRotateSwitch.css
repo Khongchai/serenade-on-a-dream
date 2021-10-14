@@ -1,0 +1,9 @@
+#switch {
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+#switch:hover {
+  transform: scale(1.1);
+}

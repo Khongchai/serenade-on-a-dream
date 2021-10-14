@@ -1,7 +1,7 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef, useState } from "react";
-import AudioControls from "./Components/AudioControls";
+import AudioControls from "./Components/SceneControls";
 import { backgroundColor } from "./const";
 import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
@@ -13,6 +13,8 @@ function App() {
   const depthOfField = useRef();
 
   const [soundWarningShown, setSoundWarningShown] = useState(false);
+
+  const [sceneAutoRotate, setSceneAutoRotate] = useState(false);
 
   return soundWarningShown ? (
     <>
@@ -41,13 +43,20 @@ function App() {
           enableRotate={false}
         />
         <Suspense fallback={null}>
-          <Scene bgScale={bgScale} depthOfField={depthOfField} />
+          <Scene
+            bgScale={bgScale}
+            depthOfField={depthOfField}
+            sceneAutoRotate={sceneAutoRotate}
+          />
           <Effects depthOfField={depthOfField} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
       <Loader />
-      <AudioControls />
+      <AudioControls
+        sceneAutoRotate={sceneAutoRotate}
+        setSceneAutoRotate={setSceneAutoRotate}
+      />
     </>
   ) : (
     <AudioWarning onClick={() => setSoundWarningShown(true)} />

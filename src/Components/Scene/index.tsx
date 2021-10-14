@@ -12,6 +12,7 @@ import bgElem5 from "../layers/5-bgElem.png";
 import textOnADream from "../layers/text-on-a-dream.png";
 import textSerenade from "../layers/text-serenade.png";
 import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
+import useDelayedMouse from "./scene-utils/useDelayedMouse";
 import ShootingStars from "./ShootingStars";
 import Sparkles from "./Sparkles";
 import StarDome from "./StarDome";
@@ -19,16 +20,20 @@ import StarDome from "./StarDome";
 interface SceneProps {
   bgScale: [number, number, number];
   depthOfField: any;
+  sceneAutoRotate: boolean;
 }
 
-//See notes for auto pan
-const delayedMouse = new DelayedMouse(0.03, true);
 /**
  * Out here to prevent rerender
  */
 let pointerPos = { x: 0, y: 0 };
 
-const Scene: React.FC<SceneProps> = ({ bgScale, depthOfField }) => {
+const Scene: React.FC<SceneProps> = ({
+  bgScale,
+  depthOfField,
+  sceneAutoRotate,
+}) => {
+  const { delayedMouse } = useDelayedMouse(sceneAutoRotate);
   const fullScale = useAspect(2000, 2000, 0.25);
   const extraLargeScale = useAspect(...bgScale);
 
@@ -78,7 +83,7 @@ const Scene: React.FC<SceneProps> = ({ bgScale, depthOfField }) => {
   }
 
   useFrame((_, delta) => {
-    const { x, y } = delayedMouse.updateMouse(
+    const { x, y } = delayedMouse.current.updateMouse(
       pointerPos.x * 0.5,
       pointerPos.y * 0.5,
       delta

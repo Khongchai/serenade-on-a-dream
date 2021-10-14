@@ -6,10 +6,18 @@ import CogButton from "./CogButton";
 import Controls from "./Controls";
 import "./index.css";
 import PlayOrPauseButton from "./PlayOrPauseButton";
+import SceneAutoRotateSwitch from "./SceneAutoRotateSwitch";
 import SongSelector from "./SongSelector";
 import VolumeControl from "./VolumeControl";
 
-const AudioControls: React.FC = ({}) => {
+interface AudioControlsProps {
+  sceneAutoRotate: boolean;
+  setSceneAutoRotate: React.Dispatch<React.SetStateAction<boolean>>;
+}
+const AudioControls: React.FC<AudioControlsProps> = ({
+  sceneAutoRotate,
+  setSceneAutoRotate,
+}) => {
   const audioProps: AudioProps[] = [
     {
       url: "./audio/audio-serenade-on-a-dream.mp3",
@@ -68,10 +76,8 @@ const AudioControls: React.FC = ({}) => {
         <CogButton onClick={() => setShowControls((stat) => !stat)} />
         <Controls showControls={showControls}>
           <div
+            className="double-component-container"
             style={{
-              width: "fit-content",
-              display: "grid",
-              placeItems: "center",
               flex: "1",
             }}
           >
@@ -93,8 +99,15 @@ const AudioControls: React.FC = ({}) => {
             />
           </div>
           <AudioSeeker player={player} />
-          <div style={{ flex: 0.4 }}>
+          <div
+            style={{ flex: 0.4, width: "100%" }}
+            className="double-component-container"
+          >
             {player ? <VolumeControl player={player} /> : null}
+            <SceneAutoRotateSwitch
+              sceneAutoRotate={sceneAutoRotate}
+              setSceneAutoRotate={setSceneAutoRotate}
+            />
           </div>
         </Controls>
       </div>

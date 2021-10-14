@@ -1,6 +1,5 @@
 import { Howl } from "howler";
 import React from "react";
-import returnMousePositionAsPercentageOfContainer from "../../utils/returnMousePositionAsPercentageOfContainer";
 import secondsToMinuteWithSeconds from "../../utils/secondsToMinutesWithSeconds";
 import useGetSeekData from "../audio-utils/useGetSeekPos";
 import "./audioSeeker.css";
