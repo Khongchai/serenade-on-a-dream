@@ -11,6 +11,10 @@ import SongSelector from "./SongSelector";
 const AudioControls: React.FC = ({}) => {
   const audioProps: AudioProps[] = [
     {
+      url: "./audio/audio-serenade-on-a-dream.mp3",
+      name: "Serenade On a Dream",
+    },
+    {
       url: "./audio/audio-stitch.mp3",
       name: "Bobbie",
     },
@@ -20,7 +24,9 @@ const AudioControls: React.FC = ({}) => {
     },
   ];
 
-  const [track, setTrack] = useState(1);
+  const [track, setTrack] = useState(
+    Math.floor(Math.random() * audioProps.length)
+  );
   const nextTrack = () => {
     resetPlayerPos();
     setTrack((cur) => (cur + 1) % audioProps.length);
@@ -38,7 +44,11 @@ const AudioControls: React.FC = ({}) => {
   useEffect(() => {
     player && player.stop();
     setPlayer(
-      new Howl({ src: audioProps[track].url, autoplay: playOrPause === "play" })
+      new Howl({
+        src: audioProps[track].url,
+        autoplay: playOrPause === "play",
+        onend: () => nextTrack(),
+      })
     );
   }, [track]);
 
