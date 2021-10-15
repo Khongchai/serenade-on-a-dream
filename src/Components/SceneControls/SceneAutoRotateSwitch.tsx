@@ -1,19 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import { DelayedMouse } from "../../utils/delayedMouse";
 import "./SceneAutoRotateSwitch.css";
 
 interface SceneAutoRotateSwitchProps {
-  sceneAutoRotate: boolean;
-  setSceneAutoRotate: React.Dispatch<React.SetStateAction<boolean>>;
+  delayedMouse: React.MutableRefObject<DelayedMouse>;
 }
 
 const SceneAutoRotateSwitch: React.FC<SceneAutoRotateSwitchProps> = ({
-  sceneAutoRotate,
-  setSceneAutoRotate,
+  delayedMouse,
 }) => {
+  const [autoPan, setAutoPan] = useState(delayedMouse.current.autopan);
   return (
-    <div onClick={() => setSceneAutoRotate((state) => !state)}>
+    <div
+      onClick={() => {
+        delayedMouse.current.setAutoPan(!delayedMouse.current.autopan);
+        setAutoPan(delayedMouse.current.autopan);
+      }}
+    >
       <p id="switch">
-        Scene Auto Rotate: <b>{sceneAutoRotate ? "On" : "Off"}</b>
+        Scene Auto Rotate: <b>{autoPan ? "On" : "Off"}</b>
       </p>
     </div>
   );

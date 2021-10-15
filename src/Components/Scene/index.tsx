@@ -12,7 +12,6 @@ import bgElem5 from "../layers/5-bgElem.png";
 import textOnADream from "../layers/text-on-a-dream.png";
 import textSerenade from "../layers/text-serenade.png";
 import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
-import useDelayedMouse from "./scene-utils/useDelayedMouse";
 import ShootingStars from "./ShootingStars";
 import Sparkles from "./Sparkles";
 import StarDome from "./StarDome";
@@ -20,7 +19,7 @@ import StarDome from "./StarDome";
 interface SceneProps {
   bgScale: [number, number, number];
   depthOfField: any;
-  sceneAutoRotate: boolean;
+  delayedMouse: React.MutableRefObject<DelayedMouse>;
 }
 
 /**
@@ -31,9 +30,8 @@ let pointerPos = { x: 0, y: 0 };
 const Scene: React.FC<SceneProps> = ({
   bgScale,
   depthOfField,
-  sceneAutoRotate,
+  delayedMouse,
 }) => {
-  const { delayedMouse } = useDelayedMouse(sceneAutoRotate);
   const fullScale = useAspect(2000, 2000, 0.25);
   const extraLargeScale = useAspect(...bgScale);
 
@@ -136,4 +134,4 @@ const Scene: React.FC<SceneProps> = ({
   );
 };
 
-export default Scene;
+export default React.memo(Scene);

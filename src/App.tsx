@@ -7,6 +7,7 @@ import Loader from "./Components/Loader";
 import Scene from "./Components/Scene";
 import Effects from "./Effects";
 import AudioWarning from "./Components/AudioWarning";
+import { DelayedMouse } from "./utils/delayedMouse";
 
 function App() {
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
@@ -14,7 +15,7 @@ function App() {
 
   const [soundWarningShown, setSoundWarningShown] = useState(false);
 
-  const [sceneAutoRotate, setSceneAutoRotate] = useState(false);
+  const delayedMouse = useRef(new DelayedMouse(0.03, false));
 
   return soundWarningShown ? (
     <>
@@ -45,18 +46,15 @@ function App() {
         <Suspense fallback={null}>
           <Scene
             bgScale={bgScale}
+            delayedMouse={delayedMouse}
             depthOfField={depthOfField}
-            sceneAutoRotate={sceneAutoRotate}
           />
           <Effects depthOfField={depthOfField} />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
       <Loader />
-      <AudioControls
-        sceneAutoRotate={sceneAutoRotate}
-        setSceneAutoRotate={setSceneAutoRotate}
-      />
+      <AudioControls delayedMouse={delayedMouse} />
     </>
   ) : (
     <AudioWarning onClick={() => setSoundWarningShown(true)} />

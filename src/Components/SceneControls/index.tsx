@@ -1,6 +1,7 @@
 import { Howl } from "howler";
 import React, { useEffect, useRef, useState } from "react";
 import { AudioProps } from "../../Types";
+import { DelayedMouse } from "../../utils/delayedMouse";
 import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
 import Controls from "./Controls";
@@ -11,13 +12,9 @@ import SongSelector from "./SongSelector";
 import VolumeControl from "./VolumeControl";
 
 interface AudioControlsProps {
-  sceneAutoRotate: boolean;
-  setSceneAutoRotate: React.Dispatch<React.SetStateAction<boolean>>;
+  delayedMouse: React.MutableRefObject<DelayedMouse>;
 }
-const AudioControls: React.FC<AudioControlsProps> = ({
-  sceneAutoRotate,
-  setSceneAutoRotate,
-}) => {
+const AudioControls: React.FC<AudioControlsProps> = ({ delayedMouse }) => {
   const audioProps: AudioProps[] = [
     {
       url: "./audio/audio-serenade-on-a-dream.mp3",
@@ -104,10 +101,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
             className="double-component-container"
           >
             {player ? <VolumeControl player={player} /> : null}
-            <SceneAutoRotateSwitch
-              sceneAutoRotate={sceneAutoRotate}
-              setSceneAutoRotate={setSceneAutoRotate}
-            />
+            <SceneAutoRotateSwitch delayedMouse={delayedMouse} />
           </div>
         </Controls>
       </div>
