@@ -4,8 +4,10 @@
   color: white;
   letter-spacing: 1px;
 }
-#song-selector-wrapper > * {
-  margin-left: 1rem;
+
+#song-selector-wrapper > p {
+  white-space: pre;
+  font-size: clamp(16px, 2vw, 18px);
 }
 
 .chevrons {

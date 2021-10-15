@@ -4,7 +4,7 @@ import { AudioProps } from "../../Types";
 import { DelayedMouse } from "../../utils/delayedMouse";
 import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
-import Controls from "./Controls";
+import Hideable from "./Hideable";
 import "./index.css";
 import PlayOrPauseButton from "./PlayOrPauseButton";
 import SceneAutoRotateSwitch from "./SceneAutoRotateSwitch";
@@ -69,41 +69,41 @@ const AudioControls: React.FC<AudioControlsProps> = ({ delayedMouse }) => {
           background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
         }}
       >
-        <div></div>
-        <CogButton onClick={() => setShowControls((stat) => !stat)} />
-        <Controls showControls={showControls}>
-          <div
-            className="double-component-container"
-            style={{
-              flex: "1",
-            }}
+        <div id="left-flex">
+          <CogButton onClick={() => setShowControls((stat) => !stat)} />
+          <Hideable
+            showControls={showControls}
+            divProps={{ id: "left-flex-hideable" }}
           >
-            <SongSelector
-              onClickBackward={() => prevTrack()}
-              onClickForward={() => nextTrack()}
-              songName={audioProps[track].name}
-            />
-            <PlayOrPauseButton
-              onClick={() => {
-                setPlayOrPause((state) =>
-                  state === "play" ? "pause" : "play"
-                );
-                if (player) {
-                  playOrPause === "play" ? player.pause() : player.play();
-                }
-              }}
-              playOrPause={playOrPause}
-            />
-          </div>
+            <div className="double-component-container">
+              <SongSelector
+                onClickBackward={() => prevTrack()}
+                onClickForward={() => nextTrack()}
+                songName={audioProps[track].name}
+              />
+              <PlayOrPauseButton
+                onClick={() => {
+                  setPlayOrPause((state) =>
+                    state === "play" ? "pause" : "play"
+                  );
+                  if (player) {
+                    playOrPause === "play" ? player.pause() : player.play();
+                  }
+                }}
+                playOrPause={playOrPause}
+              />
+            </div>
+          </Hideable>
+        </div>
+        <Hideable showControls={showControls} divProps={{ id: "mid-flex" }}>
           <AudioSeeker player={player} />
-          <div
-            style={{ flex: 0.4, width: "100%" }}
-            className="double-component-container"
-          >
+        </Hideable>
+        <Hideable showControls={showControls} divProps={{ id: "right-flex" }}>
+          <div className="double-component-container">
             {player ? <VolumeControl player={player} /> : null}
             <SceneAutoRotateSwitch delayedMouse={delayedMouse} />
           </div>
-        </Controls>
+        </Hideable>
       </div>
     </>
   );

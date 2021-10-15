@@ -7,28 +7,16 @@
   width: 100vw;
   bottom: 0;
   transition: opacity, background 0.3s;
+  padding: 1rem;
 }
 
 .visible {
   opacity: 1 !important;
 }
 
-@media (min-width: 769px) {
-  #controls-wrapper {
-    flex-direction: row;
-    padding: 1rem 1rem;
-  }
-}
-
-@media (max-width: 768px) {
-  #controls-wrapper {
-    flex-direction: column;
-    height: 100vh;
-  }
-}
-
 .double-component-container {
   width: fit-content;
+  margin: 0 auto;
   display: grid;
   place-items: center;
 }
@@ -42,4 +30,51 @@
 }
 button:focus {
   outline: 1px solid white;
+}
+
+#left-flex {
+  display: flex;
+  gap: 1rem;
+  flex: 0.5;
+}
+
+#left-flex-hideable {
+  margin: 0 auto;
+}
+
+#mid-flex {
+  flex: 0.9;
+  display: flex;
+  align-items: center;
+}
+#right-flex {
+  flex: 0.5;
+}
+
+#right-flex .double-component-container {
+  width: min(80%, 300px);
+}
+
+@media (min-width: 1001px) {
+  #controls-wrapper {
+    flex-direction: row;
+    gap: 3rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  #controls-wrapper {
+    flex-direction: column;
+    height: 100vh;
+    gap: 2rem;
+  }
+  #left-flex {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #mid-flex {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 550px;
+  }
 }
