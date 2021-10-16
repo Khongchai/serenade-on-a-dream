@@ -1,1 +1,2 @@
-See if the initial load lag still happens in prod version
+Show that audio is still loading somehow...
+If loading takes too long, prioritizes the first audio's loading.
