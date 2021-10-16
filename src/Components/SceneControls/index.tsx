@@ -32,19 +32,21 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         }),
         name: "Serenade On a Dream",
       },
+      //Switch Bobbie and Stitch's names
+      //TODO => Switch file names
       {
         howl: new Howl({
           src: "./audio/audio-stitch.mp3",
           onend: () => nextTrack(),
         }),
-        name: "Stitch",
+        name: "Bobbie",
       },
       {
         howl: new Howl({
           src: "./audio/audio-bobbie.mp3",
           onend: () => nextTrack(),
         }),
-        name: "Bobbie",
+        name: "Stitch",
       },
       {
         howl: new Howl({
