@@ -13,8 +13,12 @@ import VolumeControl from "./VolumeControl";
 
 interface AudioControlsProps {
   delayedMouse: React.MutableRefObject<DelayedMouse>;
+  loadingFinished: boolean;
 }
-const AudioControls: React.FC<AudioControlsProps> = ({ delayedMouse }) => {
+const AudioControls: React.FC<AudioControlsProps> = ({
+  delayedMouse,
+  loadingFinished,
+}) => {
   const audioProps: AudioProps[] = [
     {
       url: "./audio/audio-serenade-on-a-dream.mp3",
@@ -58,7 +62,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({ delayedMouse }) => {
     );
   }, [track]);
 
-  const [showControls, setShowControls] = useState(false);
+  const [showControls, setShowControls] = useState(true);
   const [playOrPause, setPlayOrPause] = useState<"play" | "pause">("play");
 
   return (
@@ -67,6 +71,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({ delayedMouse }) => {
         id="controls-wrapper"
         style={{
           background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
+          opacity: loadingFinished ? "1" : "0",
         }}
       >
         <div id="left-flex">

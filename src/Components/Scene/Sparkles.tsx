@@ -5,7 +5,7 @@ import { fragmentShader, vertexShader } from "../glsl/sparklesMaterial";
 import starShape from "../layers/star-shape.png";
 
 interface SparklesProps {
-  scale: [number, number, number];
+  scale: React.MutableRefObject<[number, number, number]>;
 }
 
 const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
@@ -49,7 +49,7 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
   });
 
   return (
-    <points scale={scale} position-z={-19}>
+    <points scale={scale.current} position-z={-19}>
       <bufferGeometry attach="geometry">
         <bufferAttribute
           attachObject={["attributes", "position"]}
@@ -90,7 +90,7 @@ const Sparkles: React.FC<SparklesProps> = ({ scale }) => {
   );
 };
 
-export default Sparkles;
+export default React.memo(Sparkles);
 
 //High is the densest area
 function unevenDistribution(): number {

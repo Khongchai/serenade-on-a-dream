@@ -3,11 +3,7 @@ import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { fragmentShader, vertexShader } from "../glsl/shootingStarMaterial";
 
-interface ShootingStarProps {
-  scale: [number, number, number];
-}
-
-const StarDome: React.FC<ShootingStarProps> = ({ scale }) => {
+const StarDome: React.FC = () => {
   const shootingStarMaterialRef = useRef<any>();
   const count = 100;
   const initialStarsPositions = new Float32Array(count * 3);
@@ -72,4 +68,4 @@ const StarDome: React.FC<ShootingStarProps> = ({ scale }) => {
   );
 };
 
-export default StarDome;
+export default React.memo(StarDome);

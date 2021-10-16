@@ -53,8 +53,7 @@ function App() {
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
-      <Loader />
-      <AudioControls delayedMouse={delayedMouse} />
+      <LoaderAndControls delayedMouse={delayedMouse} />
     </>
   ) : (
     <AudioWarning onClick={() => setSoundWarningShown(true)} />
@@ -62,3 +61,21 @@ function App() {
 }
 
 export default App;
+
+//Moved here to prevent rerender when loadingFinished is set to true
+function LoaderAndControls({
+  delayedMouse,
+}: {
+  delayedMouse: React.MutableRefObject<DelayedMouse>;
+}) {
+  const [loadingFinished, setLoadingFinished] = useState(false);
+  return (
+    <>
+      <Loader setLoadingFinished={setLoadingFinished} />
+      <AudioControls
+        loadingFinished={loadingFinished}
+        delayedMouse={delayedMouse}
+      />
+    </>
+  );
+}

@@ -2,9 +2,11 @@ import React, { LegacyRef, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { backgroundColor } from "../const";
 
-interface LoaderProps {}
+interface LoaderProps {
+  setLoadingFinished: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-const Loader: React.FC<LoaderProps> = ({}) => {
+const Loader: React.FC<LoaderProps> = ({ setLoadingFinished }) => {
   const progressContainer = useRef<HTMLElement>();
   const [loadingProgress, setLoadingProgress] = useState("0");
 
@@ -47,6 +49,7 @@ const Loader: React.FC<LoaderProps> = ({}) => {
           progressContainer.current!.style.display = "none";
         };
       }
+      setLoadingFinished(true);
     };
   }, []);
 

@@ -34,6 +34,10 @@ const Scene: React.FC<SceneProps> = ({
 }) => {
   const fullScale = useAspect(2000, 2000, 0.25);
   const extraLargeScale = useAspect(...bgScale);
+  const extraLargeScaleRef = useRef<any>(extraLargeScale);
+  useEffect(() => {
+    extraLargeScaleRef.current = extraLargeScale;
+  }, [extraLargeScale]);
 
   const focalPoint = useRef<THREE.Mesh>();
   const [focusVector] = useState(() => new THREE.Vector3());
@@ -101,8 +105,8 @@ const Scene: React.FC<SceneProps> = ({
     <>
       <group ref={allRef}>
         <ShootingStars colors={["red"]} count={10} />
-        <StarDome scale={extraLargeScale} />
-        <Sparkles scale={extraLargeScale} />
+        <StarDome />
+        <Sparkles scale={extraLargeScaleRef} />
         <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
