@@ -28,7 +28,6 @@ const AudioControls: React.FC<AudioControlsProps> = ({
       {
         howl: new Howl({
           src: "./audio/audio-serenade-on-a-dream.mp3",
-          autoplay: false,
           onend: () => nextTrack(),
         }),
         name: "Serenade On a Dream",
@@ -36,7 +35,6 @@ const AudioControls: React.FC<AudioControlsProps> = ({
       {
         howl: new Howl({
           src: "./audio/audio-stitch.mp3",
-          autoplay: false,
           onend: () => nextTrack(),
         }),
         name: "Stitch",
@@ -44,10 +42,16 @@ const AudioControls: React.FC<AudioControlsProps> = ({
       {
         howl: new Howl({
           src: "./audio/audio-bobbie.mp3",
-          autoplay: false,
           onend: () => nextTrack(),
         }),
         name: "Bobbie",
+      },
+      {
+        howl: new Howl({
+          src: "./audio/audio-andromeda.mp3",
+          onend: () => nextTrack(),
+        }),
+        name: "Andromeda",
       },
     ];
   }, []);
