@@ -1,7 +1,9 @@
 import { Howl } from "howler";
-import React, { useEffect, useRef, useState } from "react";
-import { AudioProps } from "../../Types";
+import React, { useMemo, useState } from "react";
+import { AudioPlayer } from "../../Types";
 import { DelayedMouse } from "../../utils/delayedMouse";
+import usePlayOrPauseCurrentTrack from "../audio-utils/usePlayOrPauseCurrentTrack";
+import useTrackControls from "../audio-utils/useTrackControls";
 import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
 import Hideable from "./Hideable";
@@ -19,51 +21,44 @@ const AudioControls: React.FC<AudioControlsProps> = ({
   delayedMouse,
   loadingFinished,
 }) => {
-  const audioProps: AudioProps[] = [
-    {
-      url: "./audio/audio-serenade-on-a-dream.mp3",
-      name: "Serenade On a Dream",
-    },
-    {
-      url: "./audio/audio-stitch.mp3",
-      name: "Bobbie",
-    },
-    {
-      url: "./audio/audio-bobbie.mp3",
-      name: "Stitch",
-    },
-  ];
-
-  const [track, setTrack] = useState(
-    Math.floor(Math.random() * audioProps.length)
-  );
-  const nextTrack = () => {
-    resetPlayerPos();
-    setTrack((cur) => (cur + 1) % audioProps.length);
-  };
-  const prevTrack = () => {
-    resetPlayerPos();
-    setTrack((cur) => (cur - 1 >= 0 ? cur - 1 : audioProps.length - 1));
-  };
-  const resetPlayerPos = () => player && player.seek(0);
-
-  /*
-    using useMemo is a bit buggy for some reason? 
-  */
-  const [player, setPlayer] = useState<Howl | undefined>(undefined);
-  useEffect(() => {
-    player && player.stop();
-    setPlayer(
-      new Howl({
-        src: audioProps[track].url,
-        autoplay: playOrPause === "play",
-        onend: () => nextTrack(),
-      })
-    );
-  }, [track]);
-
   const [showControls, setShowControls] = useState(true);
-  const [playOrPause, setPlayOrPause] = useState<"play" | "pause">("play");
+
+  const audioPlayers: AudioPlayer[] = useMemo(() => {
+    return [
+      {
+        howl: new Howl({
+          src: "./audio/audio-serenade-on-a-dream.mp3",
+          autoplay: false,
+          onend: () => nextTrack(),
+        }),
+        name: "Serenade On a Dream",
+      },
+      {
+        howl: new Howl({
+          src: "./audio/audio-stitch.mp3",
+          autoplay: false,
+          onend: () => nextTrack(),
+        }),
+        name: "Stitch",
+      },
+      {
+        howl: new Howl({
+          src: "./audio/audio-bobbie.mp3",
+          autoplay: false,
+          onend: () => nextTrack(),
+        }),
+        name: "Bobbie",
+      },
+    ];
+  }, []);
+
+  const { nextTrack, prevTrack, currentPlayer, currentTrack } =
+    useTrackControls(audioPlayers);
+
+  const { playState, switchPlayState } = usePlayOrPauseCurrentTrack(
+    currentPlayer,
+    currentTrack
+  );
 
   return (
     <>
@@ -84,28 +79,23 @@ const AudioControls: React.FC<AudioControlsProps> = ({
               <SongSelector
                 onClickBackward={() => prevTrack()}
                 onClickForward={() => nextTrack()}
-                songName={audioProps[track].name}
+                songName={currentPlayer.name}
               />
               <PlayOrPauseButton
                 onClick={() => {
-                  setPlayOrPause((state) =>
-                    state === "play" ? "pause" : "play"
-                  );
-                  if (player) {
-                    playOrPause === "play" ? player.pause() : player.play();
-                  }
+                  switchPlayState();
                 }}
-                playOrPause={playOrPause}
+                playOrPause={playState}
               />
             </div>
           </Hideable>
         </div>
         <Hideable showControls={showControls} divProps={{ id: "mid-flex" }}>
-          <AudioSeeker player={player} />
+          <AudioSeeker player={currentPlayer.howl} />
         </Hideable>
         <Hideable showControls={showControls} divProps={{ id: "right-flex" }}>
           <div className="double-component-container">
-            {player ? <VolumeControl player={player} /> : null}
+            <VolumeControl player={currentPlayer.howl} />
             <SceneAutoRotateSwitch delayedMouse={delayedMouse} />
           </div>
         </Hideable>
