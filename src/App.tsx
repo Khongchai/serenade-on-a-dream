@@ -8,6 +8,7 @@ import Scene from "./Components/Scene";
 import Effects from "./Effects";
 import AudioWarning from "./Components/AudioWarning";
 import { DelayedMouse } from "./utils/delayedMouse";
+import "./app.css";
 
 function App() {
   const bgScale: [number, number, number] = [3000, 3000, 0.3];

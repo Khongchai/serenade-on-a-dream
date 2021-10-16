@@ -17,9 +17,11 @@ const SceneAutoRotateSwitch: React.FC<SceneAutoRotateSwitchProps> = ({
         setAutoPan(delayedMouse.current.autopan);
       }}
     >
-      <p id="switch">
-        Scene Auto Rotate: <b>{autoPan ? "On" : "Off"}</b>
-      </p>
+      <button className="generic-button" style={{ padding: "2px 1rem" }}>
+        <p>
+          Follow Cursor: <b>{autoPan ? "Off" : "On"}</b>
+        </p>
+      </button>
     </div>
   );
 };

@@ -2,6 +2,7 @@
   color: white;
   cursor: pointer;
   transition: transform 0.3s;
+  background-color: "#2f344b";
 }
 
 #switch:hover {
