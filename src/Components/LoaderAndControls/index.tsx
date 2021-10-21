@@ -31,7 +31,7 @@ export default function LoaderAndControls({
       <AudioControlsAndLoader
         setAudioLoadingProgress={setAudioLoadingProgress}
         delayedMouse={delayedMouse}
-        animationLoadingProgress={animationLoadingProgress}
+        allLoadingProgress={allLoadingProgress}
       />
     </>
   );

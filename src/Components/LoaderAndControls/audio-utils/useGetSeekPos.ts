@@ -1,6 +1,6 @@
 import { Howl } from "howler";
 import { useEffect, useState } from "react";
-import secondsToMinuteWithSeconds from "../../utils/secondsToMinutesWithSeconds";
+import secondsToMinuteWithSeconds from "../../../utils/secondsToMinutesWithSeconds";
 
 export default function useGetSeekData(player?: Howl) {
   const [seekPos, setSeekPos] = useState("0:00");

@@ -2,8 +2,9 @@ import { Howl } from "howler";
 import React, { useMemo, useState } from "react";
 import { AudioPlayer } from "../../../Types";
 import { DelayedMouse } from "../../../utils/delayedMouse";
-import usePlayOrPauseCurrentTrack from "../../audio-utils/usePlayOrPauseCurrentTrack";
-import useTrackControls from "../../audio-utils/useTrackControls";
+import usePlayOrPauseCurrentTrack from "../audio-utils/usePlayOrPauseCurrentTrack";
+import usePlayWhenLoadingFinished from "../audio-utils/usePlayWhenLoadingFinished";
+import useTrackControls from "../audio-utils/useTrackControls";
 import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
 import Hideable from "./Hideable";
@@ -15,13 +16,13 @@ import VolumeControl from "./VolumeControl";
 
 interface AudioControlsProps {
   delayedMouse: React.MutableRefObject<DelayedMouse>;
-  animationLoadingProgress: number;
+  allLoadingProgress: number;
   setAudioLoadingProgress: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const AudioControls: React.FC<AudioControlsProps> = ({
   delayedMouse,
-  animationLoadingProgress,
+  allLoadingProgress,
   setAudioLoadingProgress,
 }) => {
   const [showControls, setShowControls] = useState(true);
@@ -81,13 +82,15 @@ const AudioControls: React.FC<AudioControlsProps> = ({
     currentTrack
   );
 
+  usePlayWhenLoadingFinished(switchPlayState, allLoadingProgress);
+
   return (
     <>
       <div
         id="controls-wrapper"
         style={{
           background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
-          opacity: animationLoadingProgress === 100 ? "1" : "0",
+          opacity: allLoadingProgress === 100 ? "1" : "0",
         }}
       >
         <div id="left-flex">

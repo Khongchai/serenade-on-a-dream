@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AudioPlayer } from "../../Types";
+import { AudioPlayer } from "../../../Types";
 
 /**
  * Controls track change and returns the current player

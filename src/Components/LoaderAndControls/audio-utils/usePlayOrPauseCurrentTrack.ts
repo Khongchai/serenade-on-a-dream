@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { AudioPlayer } from "../../Types";
+import { AudioPlayer } from "../../../Types";
 
 export default function usePlayOrPauseCurrentTrack(
   currentPlayer: AudioPlayer,
   currentTrack: number
 ) {
-  const [playState, setPlayState] = useState<"play" | "pause">("play");
+  const [playState, setPlayState] = useState<"play" | "pause">("pause");
 
   useEffect(() => {
     playState === "play"

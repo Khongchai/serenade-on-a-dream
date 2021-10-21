@@ -1,7 +1,7 @@
 import { Howl } from "howler";
 import React from "react";
 import secondsToMinuteWithSeconds from "../../../utils/secondsToMinutesWithSeconds";
-import useGetSeekData from "../../audio-utils/useGetSeekPos";
+import useGetSeekData from "../audio-utils/useGetSeekPos";
 import "./audioSeeker.css";
 import Fader from "./Fader";
 
