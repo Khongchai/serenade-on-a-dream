@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import returnMousePositionAsPercentageOfContainer from "../../utils/returnMousePositionAsPercentageOfContainer";
-import useGlobalMouseMoveEvent from "../audio-utils/useGlobalMouseMoveEvent";
-import useSetFillPosition from "../audio-utils/useSetFillLength";
-import useVanillaRef from "../audio-utils/useVanillaRef";
+import returnMousePositionAsPercentageOfContainer from "../../../utils/returnMousePositionAsPercentageOfContainer";
+import useGlobalMouseMoveEvent from "../../audio-utils/useGlobalMouseMoveEvent";
+import useSetFillPosition from "../../audio-utils/useSetFillLength";
+import useVanillaRef from "../../audio-utils/useVanillaRef";
 import "./fader.css";
 
 const Fader: React.FC<{

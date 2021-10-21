@@ -1,14 +1,18 @@
-import React, { LegacyRef, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { backgroundColor } from "../const";
+import { backgroundColor } from "../../const";
 
 interface LoaderProps {
-  setLoadingFinished: React.Dispatch<React.SetStateAction<boolean>>;
+  setAnimationLoadingProgress: React.Dispatch<React.SetStateAction<number>>;
+  allLoadingProgress: number;
 }
 
-const Loader: React.FC<LoaderProps> = ({ setLoadingFinished }) => {
+const AnimationLoader: React.FC<LoaderProps> = ({
+  setAnimationLoadingProgress,
+  allLoadingProgress,
+  children,
+}) => {
   const progressContainer = useRef<HTMLElement>();
-  const [loadingProgress, setLoadingProgress] = useState("0");
 
   useEffect(() => {
     THREE.DefaultLoadingManager.onProgress = function (
@@ -18,7 +22,7 @@ const Loader: React.FC<LoaderProps> = ({ setLoadingFinished }) => {
     ) {
       const progress = (itemsLoaded / itemsTotal) * 100;
 
-      setLoadingProgress(progress.toFixed(0));
+      setAnimationLoadingProgress(progress);
       if (progressContainer) {
         /**
          * use percentage make background color fade to backgroundColor from default (as of writing, white).
@@ -40,26 +44,23 @@ const Loader: React.FC<LoaderProps> = ({ setLoadingFinished }) => {
         }, ${255 - vb})`;
       }
     };
-
-    THREE.DefaultLoadingManager.onLoad = function () {
-      if (progressContainer.current) {
-        progressContainer.current.classList.add("slowly-fadeout-and-poof");
-        progressContainer.current.onanimationend = () => {
-          progressContainer.current!.style.opacity = "0";
-          progressContainer.current!.style.display = "none";
-        };
-      }
-      setLoadingFinished(true);
-    };
   }, []);
+
+  useEffect(() => {
+    if (progressContainer.current && allLoadingProgress === 100) {
+      progressContainer.current.classList.add("slowly-fadeout-and-poof");
+      progressContainer.current.onanimationend = () => {
+        progressContainer.current!.style.opacity = "0";
+        progressContainer.current!.style.display = "none";
+      };
+    }
+  }, [allLoadingProgress]);
 
   return (
     <div id="progress-container" ref={progressContainer as any}>
-      <div>
-        <p id="progress">Loading: {loadingProgress}%</p>
-      </div>
+      <div>{children}</div>
     </div>
   );
 };
 
-export default Loader;
+export default AnimationLoader;

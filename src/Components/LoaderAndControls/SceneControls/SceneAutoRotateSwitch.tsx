@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DelayedMouse } from "../../utils/delayedMouse";
+import { DelayedMouse } from "../../../utils/delayedMouse";
 import "./SceneAutoRotateSwitch.css";
 
 interface SceneAutoRotateSwitchProps {

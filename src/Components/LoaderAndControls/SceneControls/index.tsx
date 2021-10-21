@@ -1,9 +1,9 @@
 import { Howl } from "howler";
 import React, { useMemo, useState } from "react";
-import { AudioPlayer } from "../../Types";
-import { DelayedMouse } from "../../utils/delayedMouse";
-import usePlayOrPauseCurrentTrack from "../audio-utils/usePlayOrPauseCurrentTrack";
-import useTrackControls from "../audio-utils/useTrackControls";
+import { AudioPlayer } from "../../../Types";
+import { DelayedMouse } from "../../../utils/delayedMouse";
+import usePlayOrPauseCurrentTrack from "../../audio-utils/usePlayOrPauseCurrentTrack";
+import useTrackControls from "../../audio-utils/useTrackControls";
 import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
 import Hideable from "./Hideable";
@@ -15,11 +15,14 @@ import VolumeControl from "./VolumeControl";
 
 interface AudioControlsProps {
   delayedMouse: React.MutableRefObject<DelayedMouse>;
-  loadingFinished: boolean;
+  animationLoadingProgress: number;
+  setAudioLoadingProgress: React.Dispatch<React.SetStateAction<number>>;
 }
+
 const AudioControls: React.FC<AudioControlsProps> = ({
   delayedMouse,
-  loadingFinished,
+  animationLoadingProgress,
+  setAudioLoadingProgress,
 }) => {
   const [showControls, setShowControls] = useState(true);
 
@@ -28,7 +31,10 @@ const AudioControls: React.FC<AudioControlsProps> = ({
       {
         howl: new Howl({
           src: "./audio/audio-serenade-on-a-dream.mp3",
-          onend: () => nextTrack(),
+          onend: () => {
+            nextTrack();
+          },
+          onload: () => updateAudioLoadingProgress(),
         }),
         name: "Serenade On a Dream",
       },
@@ -38,6 +44,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         howl: new Howl({
           src: "./audio/audio-stitch.mp3",
           onend: () => nextTrack(),
+          onload: () => updateAudioLoadingProgress(),
         }),
         name: "Bobbie",
       },
@@ -45,6 +52,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         howl: new Howl({
           src: "./audio/audio-bobbie.mp3",
           onend: () => nextTrack(),
+          onload: () => updateAudioLoadingProgress(),
         }),
         name: "Stitch",
       },
@@ -52,11 +60,18 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         howl: new Howl({
           src: "./audio/audio-andromeda.mp3",
           onend: () => nextTrack(),
+          onload: () => updateAudioLoadingProgress(),
         }),
         name: "Andromeda",
       },
     ];
   }, []);
+
+  const updateAudioLoadingProgress = () => {
+    setAudioLoadingProgress((prog) => {
+      return Math.min(prog + 100 / audioPlayers.length, 100);
+    });
+  };
 
   const { nextTrack, prevTrack, currentPlayer, currentTrack } =
     useTrackControls(audioPlayers);
@@ -72,7 +87,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         id="controls-wrapper"
         style={{
           background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
-          opacity: loadingFinished ? "1" : "0",
+          opacity: animationLoadingProgress === 100 ? "1" : "0",
         }}
       >
         <div id="left-flex">

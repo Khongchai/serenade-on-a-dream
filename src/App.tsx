@@ -1,14 +1,13 @@
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useRef, useState } from "react";
-import AudioControls from "./Components/SceneControls";
-import { backgroundColor } from "./const";
-import Loader from "./Components/Loader";
-import Scene from "./Components/Scene";
-import Effects from "./Effects";
-import AudioWarning from "./Components/AudioWarning";
-import { DelayedMouse } from "./utils/delayedMouse";
 import "./app.css";
+import AudioWarning from "./Components/AudioWarning";
+import LoaderAndControls from "./Components/LoaderAndControls";
+import Scene from "./Components/Scene";
+import { backgroundColor } from "./const";
+import Effects from "./Effects";
+import { DelayedMouse } from "./utils/delayedMouse";
 
 function App() {
   const bgScale: [number, number, number] = [3000, 3000, 0.3];
@@ -62,21 +61,3 @@ function App() {
 }
 
 export default App;
-
-//Moved here to prevent rerender when loadingFinished is set to true
-function LoaderAndControls({
-  delayedMouse,
-}: {
-  delayedMouse: React.MutableRefObject<DelayedMouse>;
-}) {
-  const [loadingFinished, setLoadingFinished] = useState(false);
-  return (
-    <>
-      <Loader setLoadingFinished={setLoadingFinished} />
-      <AudioControls
-        loadingFinished={loadingFinished}
-        delayedMouse={delayedMouse}
-      />
-    </>
-  );
-}
