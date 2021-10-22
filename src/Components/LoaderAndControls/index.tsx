@@ -3,6 +3,7 @@ import { DelayedMouse } from "../../utils/delayedMouse";
 import AudioControlsAndLoader from "./SceneControls";
 import Progress from "./AllProgressDisplay";
 import AnimationLoaderAndProgressDisplay from "./AnimationLoader";
+import useLoadingProgress from "./audio-utils/useLoadingProgress";
 
 //Moved here to prevent rerender when loadingFinished is set to true
 export default function LoaderAndControls({
@@ -11,14 +12,11 @@ export default function LoaderAndControls({
   delayedMouse: React.MutableRefObject<DelayedMouse>;
 }) {
   //Refactor to custom component
-  const [animationLoadingProgress, setAnimationLoadingProgress] = useState(0);
-  const [audioLoadingProgress, setAudioLoadingProgress] = useState(0);
-  const [allLoadingProgress, setAllLoadingProgress] = useState(0);
-  useEffect(() => {
-    setAllLoadingProgress(
-      (animationLoadingProgress + audioLoadingProgress) / 2
-    );
-  }, [animationLoadingProgress, audioLoadingProgress]);
+  const {
+    allLoadingProgress,
+    setAnimationLoadingProgress,
+    setAudioLoadingProgress,
+  } = useLoadingProgress();
 
   return (
     <>
