@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DelayedMouse } from "../../utils/delayedMouse";
-import AudioControlsAndLoader from "./SceneControls";
+import AudioControlsAndAudioLoader from "./SceneControls";
 import Progress from "./AllProgressDisplay";
 import AnimationLoaderAndProgressDisplay from "./AnimationLoader";
 import useLoadingProgress from "./audio-utils/useLoadingProgress";
@@ -26,7 +26,7 @@ export default function LoaderAndControls({
       >
         <Progress progress={allLoadingProgress} />
       </AnimationLoaderAndProgressDisplay>
-      <AudioControlsAndLoader
+      <AudioControlsAndAudioLoader
         setAudioLoadingProgress={setAudioLoadingProgress}
         delayedMouse={delayedMouse}
         allLoadingProgress={allLoadingProgress}

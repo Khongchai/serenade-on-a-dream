@@ -2,6 +2,7 @@ import { Howl } from "howler";
 import React, { useMemo, useState } from "react";
 import { AudioPlayer } from "../../../Types";
 import { DelayedMouse } from "../../../utils/delayedMouse";
+import useGetAudioPlayers from "../audio-utils/useGetHowl";
 import usePlayOrPauseCurrentTrack from "../audio-utils/usePlayOrPauseCurrentTrack";
 import usePlayWhenLoadingFinished from "../audio-utils/usePlayWhenLoadingFinished";
 import useTrackControls from "../audio-utils/useTrackControls";
@@ -27,46 +28,28 @@ const AudioControls: React.FC<AudioControlsProps> = ({
 }) => {
   const [showControls, setShowControls] = useState(true);
 
-  const audioPlayers: AudioPlayer[] = useMemo(() => {
-    return [
+  const audioPlayers = useGetAudioPlayers(
+    [
       {
-        howl: new Howl({
-          src: "./audio/audio-serenade-on-a-dream.mp3",
-          onend: () => {
-            nextTrack();
-          },
-          onload: () => updateAudioLoadingProgress(),
-        }),
-        name: "Serenade On a Dream",
-      },
-      //Switch Bobbie and Stitch's names
-      //TODO => Switch file names
-      {
-        howl: new Howl({
-          src: "./audio/audio-stitch.mp3",
-          onend: () => nextTrack(),
-          onload: () => updateAudioLoadingProgress(),
-        }),
         name: "Bobbie",
+        src: "./audio/audio-stitch.mp3",
       },
       {
-        howl: new Howl({
-          src: "./audio/audio-bobbie.mp3",
-          onend: () => nextTrack(),
-          onload: () => updateAudioLoadingProgress(),
-        }),
+        name: "Serenade On a Dream",
+        src: "./audio/audio-serenade-on-a-dream.mp3",
+      },
+      {
         name: "Stitch",
+        src: "./audio/audio-bobbie.mp3",
       },
       {
-        howl: new Howl({
-          src: "./audio/audio-andromeda.mp3",
-          onend: () => nextTrack(),
-          onload: () => updateAudioLoadingProgress(),
-        }),
         name: "Andromeda",
+        src: "./audio/audio-andromeda.mp3",
       },
-    ];
-  }, []);
+    ],
+    () => nextTrack(),
+    () => updateAudioLoadingProgress()
+  );
 
   const updateAudioLoadingProgress = () => {
     setAudioLoadingProgress((prog) => {

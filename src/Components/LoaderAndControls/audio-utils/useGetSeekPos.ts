@@ -9,21 +9,24 @@ export default function useGetSeekData(player?: Howl) {
   useEffect(() => {
     let interval: any;
     interval = setInterval(() => {
-      manageSeekPos();
+      setSeekPosition();
     }, 1000);
 
     return () => clearInterval(interval);
   }, [player]);
 
   useEffect(() => {
-    manageSeekPos();
+    setSeekPosition();
   }, [player ? player.seek() : null]);
 
+  /*
+    Reflect seek position in the audio 
+  */
   useEffect(() => {
     player?.seek((seekPercentage * player!.duration()) / 100);
   }, [seekPercentage]);
 
-  function manageSeekPos() {
+  function setSeekPosition() {
     if (player) {
       setSeekPos(() => secondsToMinuteWithSeconds(player.seek()));
       setSeekPercentage(() => {
