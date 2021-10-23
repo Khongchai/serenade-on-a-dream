@@ -15,7 +15,7 @@ function App() {
 
   const [soundWarningShown, setSoundWarningShown] = useState(false);
 
-  const delayedMouse = useRef(new DelayedMouse(0.03, false));
+  const delayedMouse = useRef(new DelayedMouse(0.03, true));
 
   const everthingLoaded = useRef(false);
 
