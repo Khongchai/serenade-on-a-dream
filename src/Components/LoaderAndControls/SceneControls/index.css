@@ -65,7 +65,7 @@ button:focus {
 @media (max-width: 1000px) {
   #controls-wrapper {
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     gap: 2rem;
   }
   #left-flex {
