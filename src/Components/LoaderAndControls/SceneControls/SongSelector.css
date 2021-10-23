@@ -6,8 +6,20 @@
 }
 
 #song-selector-wrapper > p {
-  white-space: pre;
   font-size: clamp(16px, 2vw, 18px);
+}
+
+@media (min-width: 401px) {
+  #song-selector-wrapper > p {
+    white-space: pre;
+  }
+}
+
+@media (max-width: 400px) {
+  #song-selector-wrapper > p {
+    white-space: unset;
+    text-align: center;
+  }
 }
 
 .chevrons {
