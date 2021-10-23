@@ -39,10 +39,10 @@ const Effects: React.FC<{
     const renderPass = new RenderPass(scene, camera);
 
     const depthOfFieldEffect = new DepthOfFieldEffect(camera, {
+      //comment to disable bokeh
+      bokehScale: 3.75,
       //comment to enable bokeh
-      // bokehScale: 3.75,
-      //uncomment to disable bokeh
-      bokehScale: 0,
+      // bokehScale: 0,
       focalLength: 0.08,
     });
     const bloomEffect = new BloomEffect({

@@ -1,6 +1,5 @@
 import React from "react";
-import { Texture, Color } from "three";
-import { backgroundColor } from "../../const";
+import { Texture } from "three";
 import { fragmentShader, vertexShader } from "../glsl/fadeToBackgroundMaterial";
 
 interface BackgroundShaderMaterialProps {
@@ -18,9 +17,6 @@ const BackgroundShaderMaterial: React.FC<BackgroundShaderMaterialProps> = ({
       uniforms={{
         uTexture: { value: shaderTexture },
         pixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
-        backgroundColor: {
-          value: new Color(backgroundColor.hex),
-        },
         uOpacity: {
           value: uOpacity ? uOpacity : 1,
         },

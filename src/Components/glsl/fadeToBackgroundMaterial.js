@@ -15,7 +15,6 @@ export const fragmentShader = `
     #define PI 3.1415926538
 
     uniform sampler2D uTexture;
-    uniform vec3 backgroundColor;
     uniform float uOpacity;
 
     varying vec2 vUv;
@@ -27,12 +26,14 @@ export const fragmentShader = `
 
         float weight = 1.01;
 
-        float edgeLocationX = -pow((2.0 * vUv.x * weight - weight), 4.0) + 1.0;
-        vec3 fadedX = mix(backgroundColor, textureColor.rgb, max(edgeLocationX, 0.0));
+        float taper = 2.0;
+
+        float edgeLocationX = -pow((2.0 * vUv.x * weight - weight), 8.0) + 1.0;
+        float fadedX = textureColor.a * max(edgeLocationX, 0.0);
 
         float edgeLocationY = -pow(2.0 * vUv.y * weight - weight, 8.0) + 1.0;
-        vec3 allFaded = mix(backgroundColor, fadedX, max(edgeLocationY, 0.0));
+        float allFaded = fadedX * max(edgeLocationY, 0.0);
 
-        gl_FragColor = vec4(allFaded, textureColor.a * uOpacity);
+        gl_FragColor = vec4(textureColor.rgb, allFaded * uOpacity);
     }
 `;
