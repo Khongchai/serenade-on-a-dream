@@ -19,14 +19,20 @@ export const fragmentShader = `
     uniform float uOpacity;
 
     varying vec2 vUv;
+    
 
     void main()
     {
         vec4 textureColor = texture2D(uTexture, vUv);
 
-        float edgeLocation = -pow((2.0 * vUv.x - 1.0), 8.0) + 1.0;
+        float weight = 1.01;
 
-        vec3 newUv = mix(backgroundColor, textureColor.rgb, edgeLocation);
-        gl_FragColor = vec4(newUv, textureColor.a * uOpacity);
+        float edgeLocationX = -pow((2.0 * vUv.x * weight - weight), 4.0) + 1.0;
+        vec3 fadedX = mix(backgroundColor, textureColor.rgb, max(edgeLocationX, 0.0));
+
+        float edgeLocationY = -pow(2.0 * vUv.y * weight - weight, 8.0) + 1.0;
+        vec3 allFaded = mix(backgroundColor, fadedX, max(edgeLocationY, 0.0));
+
+        gl_FragColor = vec4(allFaded, textureColor.a * uOpacity);
     }
 `;
