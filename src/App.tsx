@@ -17,6 +17,8 @@ function App() {
 
   const delayedMouse = useRef(new DelayedMouse(0.03, false));
 
+  const everthingLoaded = useRef(false);
+
   return soundWarningShown ? (
     <>
       <Canvas
@@ -49,11 +51,17 @@ function App() {
             delayedMouse={delayedMouse}
             depthOfField={depthOfField}
           />
-          <Effects depthOfField={depthOfField} />
+          <Effects
+            everythingLoaded={everthingLoaded}
+            depthOfField={depthOfField}
+          />
         </Suspense>
         <color attach="background" args={[backgroundColor.hex]} />
       </Canvas>
-      <LoaderAndControls delayedMouse={delayedMouse} />
+      <LoaderAndControls
+        everythingLoaded={everthingLoaded}
+        delayedMouse={delayedMouse}
+      />
     </>
   ) : (
     <AudioWarning onClick={() => setSoundWarningShown(true)} />

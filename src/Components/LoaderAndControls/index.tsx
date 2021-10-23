@@ -8,8 +8,10 @@ import useLoadingProgress from "./audio-utils/useLoadingProgress";
 //Moved here to prevent rerender when loadingFinished is set to true
 export default function LoaderAndControls({
   delayedMouse,
+  everythingLoaded,
 }: {
   delayedMouse: React.MutableRefObject<DelayedMouse>;
+  everythingLoaded: React.MutableRefObject<boolean>;
 }) {
   //Refactor to custom component
   const {
@@ -17,6 +19,10 @@ export default function LoaderAndControls({
     setAnimationLoadingProgress,
     setAudioLoadingProgress,
   } = useLoadingProgress();
+
+  useEffect(() => {
+    everythingLoaded.current = allLoadingProgress === 100;
+  }, [allLoadingProgress]);
 
   return (
     <>

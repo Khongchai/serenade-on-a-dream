@@ -90,6 +90,7 @@ const Scene: React.FC<SceneProps> = ({
       pointerPos.y * 0.5,
       delta
     );
+
     allRef.current.rotation.y = x;
     allRef.current.rotation.x = -y;
 
@@ -126,13 +127,12 @@ const Scene: React.FC<SceneProps> = ({
         >
           <BackgroundShaderMaterial shaderTexture={clouds} uOpacity={0.65} />
         </Plane>
-        {/* Not yet visible, ask artist what to do */}
-        {/* <Plane args={[2, 2]} position-z={22} ref={focalPoint} scale={fullScale}>
+        <Plane args={[2, 2]} position-z={25} ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={serenade} />
         </Plane>
-        <Plane args={[2, 2]} position-z={22} ref={focalPoint} scale={fullScale}>
+        <Plane args={[2, 2]} position-z={25} ref={focalPoint} scale={fullScale}>
           <BackgroundShaderMaterial shaderTexture={onADream} />
-        </Plane> */}
+        </Plane>
       </group>
     </>
   );

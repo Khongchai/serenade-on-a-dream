@@ -1,4 +1,4 @@
-import { extend, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import {
   BloomEffect,
   DepthOfFieldEffect,
@@ -6,21 +6,21 @@ import {
   EffectPass,
   RenderPass,
   ShaderPass,
-  // @ts-ignore
+  //@ts-ignore
 } from "postprocessing";
 import React, { useEffect, useMemo } from "react";
 import { MathUtils, ShaderMaterial, TextureLoader } from "three";
 import { EffectComposer as EffectComposerType } from "three/examples/jsm/postprocessing/EffectComposer";
 import customFadeInFX from "../Components/glsl/customFadeInFX";
-
 import displacementTexture from "../Components/layers/transition/displacement.jpg";
 import solidColor from "../Components/layers/transition/solid-color.png";
 
 let time = 0;
 
 const Effects: React.FC<{
+  everythingLoaded: React.MutableRefObject<boolean>;
   depthOfField: any;
-}> = ({ depthOfField }) => {
+}> = ({ depthOfField, everythingLoaded }) => {
   const {
     gl,
     scene,
@@ -80,10 +80,14 @@ const Effects: React.FC<{
   useFrame((_, delta) => {
     time += (delta % 2) * Math.PI;
     bloom.blendMode.opacity.value = Math.sin(1.2 * time) / 5 + 0.7;
+
     shaderMat.uniforms.dispFactor.value = MathUtils.lerp(
       shaderMat.uniforms.dispFactor.value,
       1,
-      0.1
+      /**
+       * Wait for everything to load before doing the transition
+       */
+      everythingLoaded.current ? 0.1 : 0
     );
 
     comp.render();
