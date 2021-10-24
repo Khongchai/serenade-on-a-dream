@@ -73,6 +73,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         id="controls-wrapper"
         style={{
           background: showControls ? "rgba(0,0,0,0.5)" : "rgba(0,0,0,0)",
+          pointerEvents: showControls ? "auto" : "none",
           opacity: allLoadingProgress === 100 ? "1" : "0",
         }}
       >
@@ -80,7 +81,9 @@ const AudioControls: React.FC<AudioControlsProps> = ({
           <CogButton onClick={() => setShowControls((stat) => !stat)} />
           <Hideable
             showControls={showControls}
-            divProps={{ id: "left-flex-hideable" }}
+            divProps={{
+              id: "left-flex-hideable",
+            }}
           >
             <div className="double-component-container">
               <SongSelector
@@ -97,10 +100,20 @@ const AudioControls: React.FC<AudioControlsProps> = ({
             </div>
           </Hideable>
         </div>
-        <Hideable showControls={showControls} divProps={{ id: "mid-flex" }}>
+        <Hideable
+          showControls={showControls}
+          divProps={{
+            id: "mid-flex",
+          }}
+        >
           <AudioSeeker player={currentPlayer.howl} />
         </Hideable>
-        <Hideable showControls={showControls} divProps={{ id: "right-flex" }}>
+        <Hideable
+          showControls={showControls}
+          divProps={{
+            id: "right-flex",
+          }}
+        >
           <div className="double-component-container">
             <VolumeControl player={currentPlayer.howl} />
             <SceneAutoRotateSwitch delayedMouse={delayedMouse} />
