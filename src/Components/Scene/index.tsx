@@ -106,15 +106,16 @@ const Scene: React.FC<SceneProps> = ({
     <>
       <group ref={allRef}>
         <ShootingStars colors={["red"]} count={10} />
-        <StarDome />
+        {/* Don't remove StarDome, keep for future reference */}
+        {/* <StarDome /> */}
         <Sparkles scale={extraLargeScaleRef} />
-        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-25}>
+        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-30}>
           <BackgroundShaderMaterial shaderTexture={bg} />
         </Plane>
-        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-19}>
+        <Plane args={[2, 2]} scale={extraLargeScale} position-z={-23}>
           <BackgroundShaderMaterial shaderTexture={moon} />
         </Plane>
-        <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-18}>
+        <Plane args={[1.7, 1.7]} scale={extraLargeScale} position-z={-9}>
           <BackgroundShaderMaterial shaderTexture={bigCloud} />
         </Plane>
         <Plane args={[2, 2]} position-z={20} ref={focalPoint} scale={fullScale}>

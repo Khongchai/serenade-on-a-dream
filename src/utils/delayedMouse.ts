@@ -18,6 +18,9 @@ export class DelayedMouse {
 
   delta: number;
 
+  reverseDirectionX: 1 | -1;
+  reverseDirectionY: 1 | -1;
+
   constructor(speedDiff = 0.3, autopan = false, delta = 0) {
     this.curX = 0;
     this.curY = 0;
@@ -33,6 +36,10 @@ export class DelayedMouse {
     this.speedDiff = speedDiff;
 
     this.delta = delta;
+
+    //Determines the autoRotate direction
+    this.reverseDirectionX = (Math.floor(Math.random() * 3) - 1 || 1) as 1 | -1;
+    this.reverseDirectionY = (Math.floor(Math.random() * 3) - 1 || 1) as 1 | -1;
   }
 
   updateMouse(curX: number, curY: number, delta: number) {
@@ -67,5 +74,8 @@ export class DelayedMouse {
   autoCurrent() {
     this.curX = Math.sin(this.delta * 0.15) * 0.4;
     this.curY = Math.cos(this.delta * 0.1) * 0.2;
+
+    this.curX *= this.reverseDirectionX;
+    this.curY *= this.reverseDirectionY;
   }
 }
