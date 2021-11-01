@@ -14,7 +14,6 @@ import textSerenade from "../layers/text-serenade.png";
 import BackgroundShaderMaterial from "./BackgroundShaderMaterial";
 import ShootingStars from "./ShootingStars";
 import Sparkles from "./Sparkles";
-import StarDome from "./StarDome";
 
 interface SceneProps {
   bgScale: [number, number, number];
