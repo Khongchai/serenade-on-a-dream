@@ -25,6 +25,7 @@ const SeekerContainer: React.FC<AudioSeekerProps> = ({ player }) => {
     <div id="audio-seeker-wrapper">
       <p>{seekPos}</p>
       <Fader
+        waitTillPointerUp={true}
         action={(faderPercentage) => setSeekPercentage(faderPercentage)}
         position={seekPercentage}
       />

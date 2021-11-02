@@ -1,10 +1,14 @@
 import { useRef, useState } from "react";
-import returnMousePositionAsPercentageOfContainer from "../../../utils/returnMousePositionAsPercentageOfContainer";
+import useAdjust from "../audio-utils/useAdjust";
 import useGlobalMouseMoveEvent from "../audio-utils/useGlobalMouseMoveEvent";
 import useSetFillPosition from "../audio-utils/useSetFillLength";
+import useUpdateFaderPosition from "../audio-utils/useUpdateFaderPosition";
 import useVanillaRef from "../audio-utils/useVanillaRef";
 import "./fader.css";
 
+/*
+  Note for better architecture: have a central state, faderPos state, and audioPos state.
+*/
 const Fader: React.FC<{
   /**
    * Action that should happen when fader is adjusted.
@@ -16,30 +20,40 @@ const Fader: React.FC<{
    * This will be used as the css's width percentage, so value should be in the range of 0 - 100
    */
   position: number;
-}> = ({ position, action }) => {
-  const fill = useRef<any>();
-  useSetFillPosition(fill, position);
 
+  /*
+    Wait until the pointer is released before performing an action.
+    Example: avoid scrubbing sound when use as an audio seeker
+  */
+  waitTillPointerUp?: boolean;
+}> = ({ position, action, waitTillPointerUp }) => {
   const [touchingFader, setTouchingFader] = useState(false);
+  const allowUpdate = !waitTillPointerUp;
 
-  //For vanilla js reference
   const touchingFaderRef = useVanillaRef(touchingFader);
-
-  //This will allow the user to move the mouse anywhere while adjusting the knob
   const faderRef = useRef<any>();
-  const adjust = (e: any) => {
-    const percentage = returnMousePositionAsPercentageOfContainer(
-      e.clientX || e.touches[0].clientX,
-      faderRef.current.getBoundingClientRect().x,
-      faderRef.current.clientWidth
-    );
-    const clampedPercentage = Math.min(Math.max(percentage, 0), 99);
-    action(clampedPercentage);
-  };
+  const fill = useRef<any>();
+
+  const faderPosition = useUpdateFaderPosition(
+    position,
+    allowUpdate,
+    touchingFader
+  );
+
+  useSetFillPosition(fill, faderPosition);
+
+  const adjust = useAdjust(faderRef, fill, allowUpdate, action);
 
   const adjustIfFaderDown = (e: any) => touchingFaderRef.current && adjust(e);
-  //prettier-ignore
-  const { triggerMoveFunction } = useGlobalMouseMoveEvent(adjustIfFaderDown, () => setTouchingFader(false));
+
+  const { triggerMoveFunction } = useGlobalMouseMoveEvent(
+    adjustIfFaderDown,
+    (e: any) => {
+      adjust(e);
+      setTouchingFader(false);
+    },
+    touchingFader
+  );
 
   return (
     <div
@@ -47,7 +61,10 @@ const Fader: React.FC<{
       ref={faderRef}
       onMouseDown={() => triggerMoveFunction() && setTouchingFader(true)}
       onTouchStart={() => setTouchingFader(true)}
-      onTouchEnd={() => setTouchingFader(false)}
+      onTouchEnd={(e) => {
+        adjust(e);
+        setTouchingFader(false);
+      }}
       onClick={(e) => {
         adjust(e);
       }}

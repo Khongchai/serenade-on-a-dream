@@ -17,7 +17,11 @@ const VolumeControl: React.FC<VolumeControlProps> = ({ player }) => {
   return (
     <div id="volume-control-container">
       <img alt="speaker-icon" src="icons/speaker-icon.png" id="speaker-icon" />
-      <Fader position={volumeLevel * 100} action={adjustVolume} />
+      <Fader
+        waitTillPointerUp={false}
+        position={volumeLevel * 100}
+        action={adjustVolume}
+      />
     </div>
   );
 };
