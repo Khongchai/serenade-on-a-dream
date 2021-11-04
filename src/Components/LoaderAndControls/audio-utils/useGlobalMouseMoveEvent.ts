@@ -11,7 +11,6 @@ export default function useGlobalMouseMoveEvent(
   const addGlobalMouseMove = () => {
     window.addEventListener("mousemove", mouseMoveRef.current);
     window.addEventListener("mouseup", mouseUpRef.current);
-    return true;
   };
 
   useEffect(() => {

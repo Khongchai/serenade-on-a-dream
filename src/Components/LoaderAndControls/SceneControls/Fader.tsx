@@ -59,7 +59,10 @@ const Fader: React.FC<{
     <div
       className="fader"
       ref={faderRef}
-      onMouseDown={() => triggerMoveFunction() && setTouchingFader(true)}
+      onMouseDown={() => {
+        triggerMoveFunction();
+        setTouchingFader(true);
+      }}
       onTouchStart={() => setTouchingFader(true)}
       onTouchEnd={(e) => {
         adjust(e);
