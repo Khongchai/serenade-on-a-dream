@@ -12,12 +12,11 @@ const VolumeControl: React.FC<VolumeControlProps> = ({ player }) => {
 
   const adjustVolume = (faderPercentage: number) => {
     setVolumeLevel(faderPercentage / 100);
-    player.volume(volumeLevel);
   };
 
   useEffect(() => {
     player.volume(volumeLevel);
-  }, [player]);
+  }, [player, volumeLevel]);
 
   return (
     <div id="volume-control-container">
