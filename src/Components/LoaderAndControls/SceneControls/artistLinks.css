@@ -1,0 +1,17 @@
+.links-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.links-wrapper > a > img {
+  width: 25px;
+}
+
+.links-wrapper > a {
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+.links-wrapper > a:hover {
+  opacity: 1;
+}

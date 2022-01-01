@@ -6,6 +6,7 @@ import useGetAudioPlayers from "../audio-utils/useGetHowl";
 import usePlayOrPauseCurrentTrack from "../audio-utils/usePlayOrPauseCurrentTrack";
 import usePlayWhenLoadingFinished from "../audio-utils/usePlayWhenLoadingFinished";
 import useTrackControls from "../audio-utils/useTrackControls";
+import ArtistLinks from "./ArtistLinks";
 import AudioSeeker from "./AudioSeeker";
 import CogButton from "./CogButton";
 import Hideable from "./Hideable";
@@ -107,6 +108,9 @@ const AudioControls: React.FC<AudioControlsProps> = ({
           }}
         >
           <AudioSeeker player={currentPlayer.howl} />
+          <div style={{ flex: 1 }}>
+            <ArtistLinks />
+          </div>
         </Hideable>
         <Hideable
           showControls={showControls}
