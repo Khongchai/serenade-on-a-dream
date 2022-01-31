@@ -33,7 +33,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
     [
       {
         name: "Bobbie",
-        src: "./audio/audio-stitch.mp3",
+        src: "./audio/audio-bobbie.mp3",
       },
       {
         name: "Serenade On a Dream",
@@ -41,7 +41,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
       },
       {
         name: "Stitch",
-        src: "./audio/audio-bobbie.mp3",
+        src: "./audio/audio-stitch.mp3",
       },
       {
         name: "Andromeda",
