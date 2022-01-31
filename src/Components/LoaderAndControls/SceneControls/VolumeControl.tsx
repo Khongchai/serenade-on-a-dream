@@ -8,7 +8,7 @@ interface VolumeControlProps {
 }
 
 const VolumeControl: React.FC<VolumeControlProps> = ({ player }) => {
-  const [volumeLevel, setVolumeLevel] = useState(1);
+  const [volumeLevel, setVolumeLevel] = useState(0.6);
 
   const adjustVolume = (faderPercentage: number) => {
     setVolumeLevel(faderPercentage / 100);
